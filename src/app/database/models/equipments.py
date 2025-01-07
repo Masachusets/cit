@@ -1,8 +1,23 @@
 from enum import Enum
-from sqlalchemy import String, Date, ForeignKey, CheckConstraint
+from typing import Any
+
+from sqlalchemy import String, ForeignKey, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from .base import BaseStockModel
-from datetime import date
+from .custom_types import ITNumberType, YearMonthType
+
+
+def create_relationship(
+        back_populates: str = "equipments",
+        lazy: str = "selectin", #"joined"
+        **kwargs: Any,
+) -> relationship:
+    return relationship(
+        back_populates=back_populates,
+        lazy=lazy,
+        **kwargs,
+    )
 
 
 class EquipmentStatus(str, Enum):
@@ -17,20 +32,20 @@ class EquipmentStatus(str, Enum):
 class Equipment(BaseStockModel):
     __tablename__ = "equipment"
 
-    inventory_number: Mapped[str] = mapped_column(String(7), primary_key=True)
+    it: Mapped[str] = mapped_column(ITNumberType, primary_key=True)
     name_id: Mapped[int] = mapped_column(ForeignKey("equipment_names.id"))
     model: Mapped[str] = mapped_column(String, nullable=True)
     serial_number: Mapped[str] = mapped_column(String(50))
-    manufacture_date: Mapped[date] = mapped_column(Date, nullable=True)
-    arrival_date: Mapped[date] = mapped_column(Date, nullable=True)
-    incoming_document_id: Mapped[int] = mapped_column(
+    manufacture_date: Mapped[str] = mapped_column(YearMonthType, nullable=True)
+    arrival_date: Mapped[str] = mapped_column(YearMonthType, nullable=True)
+    document_in_id: Mapped[int] = mapped_column(
         ForeignKey("documents.id"), nullable=True
     )
-    outgoing_document_id: Mapped[int] = mapped_column(
+    document_out_id: Mapped[int] = mapped_column(
         ForeignKey("documents.id"), nullable=True
     )
     status: Mapped[EquipmentStatus] = mapped_column(
-        EquipmentStatus, default=EquipmentStatus.EXPLOITED
+        default=EquipmentStatus.EXPLOITED
     )
     employee_id: Mapped[str] = mapped_column(
         ForeignKey("employees.slug"), nullable=True
@@ -43,20 +58,16 @@ class Equipment(BaseStockModel):
     notes: Mapped[str] = mapped_column(String, nullable=True)
 
     # relationships
-    name: Mapped["EquipmentName"] = relationship(
-        "EquipmentName", back_populates="equipments"
+    name: Mapped["EquipmentName"] = create_relationship()
+    employee: Mapped["Employee"] = create_relationship()
+    department: Mapped["Department"] = create_relationship()
+    document_in: Mapped["Document"] = create_relationship(
+        back_populates="equipments_in",
+        foreign_keys=[document_in_id],
     )
-    employee: Mapped["Employee"] = relationship(
-        "Employee", back_populates="equipments"
-    )
-    department: Mapped["Department"] = relationship(
-        "Department", back_populates="equipments"
-    )
-    incoming_document: Mapped["Document"] = relationship(
-        "Document", foreign_keys=[incoming_document_id]
-    )
-    outgoing_document: Mapped["Document"] = relationship(
-        "Document", foreign_keys=[outgoing_document_id]
+    document_out: Mapped["Document"] = create_relationship(
+        back_populates="equipments_out",
+        foreign_keys=[document_out_id],
     )
 
     __table_args__ = (

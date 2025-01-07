@@ -1,0 +1,5 @@
+ITEM_LIST = "/items"
+ITEM_CREATE = "/items"
+ITEM_DETAIL = "/items/{item_it:str}"
+ITEM_UPDATE = "/items/{item_it:str}"
+ITEM_DELETE = "/items/{item_it:str}"
