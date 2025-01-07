@@ -13,11 +13,11 @@ class ApplicationConfigurator(InitPluginProtocol, CLIPluginProtocol):
     def __init__(self) -> None:
         """Initialize ``ApplicationConfigurator``."""
 
-    def on_cli_init(self, cli: Group) -> None:
-
-        from src.app.config.base import get_settings
-
-        settings = get_settings()
+    # def on_cli_init(self, cli: Group) -> None:
+    #
+    #     from src.app.config.base import get_settings
+    #
+    #     settings = get_settings()
         # cli.add_command(user_management_app)
 
     def on_app_init(self, app_config: AppConfig) -> AppConfig:
@@ -26,14 +26,13 @@ class ApplicationConfigurator(InitPluginProtocol, CLIPluginProtocol):
         Args:
             app_config: The :class:`AppConfig <.config.app.AppConfig>` instance.
         """
-        from advanced_alchemy.exceptions import RepositoryError
 
-        from src.app.config.base import get_settings
+        # from src.app.config.base import get_settings
 
         # from src.app.lib.exceptions import ApplicationError, exception_to_http_response
 
         # from litestar.security.jwt import Token
-        settings = get_settings()
+        # settings = get_settings()
         # app_config.signature_namespace.update(
         #     {
         #         "Token": Token,
