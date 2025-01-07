@@ -1,8 +1,7 @@
-from sqlalchemy.orm import DeclarativeBase
-from advanced_alchemy.base import CommonTableAttributes, orm_registry
+from advanced_alchemy.base import AdvancedDeclarativeBase, CommonTableAttributes, orm_registry
 
 
-class BaseStockModel(CommonTableAttributes, DeclarativeBase):
+class BaseStockModel(CommonTableAttributes, AdvancedDeclarativeBase):
     __abstract__ = True
 
     registry = orm_registry
