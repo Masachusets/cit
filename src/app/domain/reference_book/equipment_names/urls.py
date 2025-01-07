@@ -1,0 +1,6 @@
+ITEM_NAME_LIST = "/equipment_names"
+ITEM_NAME_LIST_WEB = "/equipment_names/web"
+ITEM_NAME_CREATE = "/equipment_names"
+ITEM_NAME_DETAIL = "/equipment_names/{id:int}"
+ITEM_NAME_UPDATE = "/equipment_names/{id:int}"
+ITEM_NAME_DELETE = "/equipment_names/{id:int}"

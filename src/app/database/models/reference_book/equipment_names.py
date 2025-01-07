@@ -5,10 +5,9 @@ from advanced_alchemy.base import BigIntPrimaryKey
 from ..base import BaseStockModel
 
 
-class EquipmentName(BaseStockModel):
+class EquipmentName(BaseStockModel, BigIntPrimaryKey):
     __tablename__ = "equipment_names"
 
-    id: Mapped[int] = mapped_column(BigIntPrimaryKey)
     name: Mapped[str] = mapped_column(String(100))
     nomenclature_code: Mapped[str] = mapped_column(String(15), unique=True)
 
