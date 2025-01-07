@@ -5,10 +5,9 @@ from .base import BaseStockModel
 from datetime import date
 
 
-class Document(BaseStockModel):
+class Document(BaseStockModel, BigIntPrimaryKey):
     __tablename__ = "documents"
 
-    id: Mapped[int] = mapped_column(BigIntPrimaryKey)
     type: Mapped[str] = mapped_column(String(50), nullable=False)
     doc_number: Mapped[str] = mapped_column(String(10), nullable=False)
     doc_date: Mapped[date] = mapped_column(Date, nullable=True, default=date.today)
@@ -16,13 +15,13 @@ class Document(BaseStockModel):
 
     # relationships
 
-    incoming_equipments: Mapped[list["Equipment"]] = relationship(
+    equipments_in: Mapped[list["Equipment"]] = relationship(
         "Equipment",
-        foreign_keys="[Equipment.incoming_document_id]",
-        back_populates="incoming_document",
+        foreign_keys="[Equipment.document_in_id]",
+        back_populates="document_in",
     )
-    outgoing_equipments: Mapped[list["Equipment"]] = relationship(
+    equipments_out: Mapped[list["Equipment"]] = relationship(
         "Equipment",
-        foreign_keys="[Equipment.outgoing_document_id]",
-        back_populates="outgoing_document",
+        foreign_keys="[Equipment.document_out_id]",
+        back_populates="document_out",
     )

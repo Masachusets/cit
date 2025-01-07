@@ -1,0 +1,6 @@
+DOCUMENT_LIST = "/documents"
+DOCUMENT_LIST_WEB = "/documents/web"
+DOCUMENT_CREATE = "/documents"
+DOCUMENT_DETAIL = "/documents/{document_id:int}"
+DOCUMENT_UPDATE = "/documents/{document_id:int}"
+DOCUMENT_DELETE = "/documents/{document_id:int}"
