@@ -1,6 +1,8 @@
 from enum import Enum
-from sqlalchemy import String, Enum as SQLAlchemyEnum
+from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from advanced_alchemy.base import SlugKey
+
 from ..base import BaseStockModel
 
 
@@ -11,14 +13,12 @@ class DepartmentType(str, Enum):
     STORAGE = "storage"
 
 
-class Department(BaseStockModel):
+class Department(BaseStockModel, SlugKey):
     __tablename__ = "departments"
 
-    slug: Mapped[str] = mapped_column(String(20), primary_key=True, default="storage")
-    name: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
+    slug: Mapped[str] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(100), unique=True)
     type: Mapped[DepartmentType] = mapped_column(
-        SQLAlchemyEnum(DepartmentType),
-        nullable=False,
         default=DepartmentType.STORAGE,
     )
 
