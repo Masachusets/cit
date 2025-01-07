@@ -1,8 +1,7 @@
 from .base import BaseStockModel
-from .equipments import Equipment
+from .equipments import Equipment, EquipmentStatus
 from .documents import Document
-from .enums import EquipmentStatus, DepartmentType
-from .reference_book import Department, Employee, EquipmentName
+from .reference_book import Department, Employee, EquipmentName, DepartmentType
 
 __all__ = [
     "BaseStockModel",
