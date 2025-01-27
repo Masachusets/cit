@@ -35,6 +35,12 @@ warn_unused_configs = true
 ignore_missing_imports = true
 files = "src"
 
+[tool.pyright]
+exclude = ["**/__pycache__", ".venv"]
+pythonVersion = "3.13"
+venvPath = "."
+venv = ".venv"
+
 [project.optional-dependencies]
 dev = [
     "black==23.10.0",
