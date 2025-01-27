@@ -1,4 +1,8 @@
-from advanced_alchemy.base import AdvancedDeclarativeBase, CommonTableAttributes, orm_registry
+from advanced_alchemy.base import (
+    AdvancedDeclarativeBase,
+    CommonTableAttributes,
+    orm_registry,
+)
 
 
 class BaseStockModel(CommonTableAttributes, AdvancedDeclarativeBase):
