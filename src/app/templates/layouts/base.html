@@ -1,0 +1,21 @@
+<!-- templates/layouts/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include "partials/head.html" %}
+</head>
+
+<body class="bg-gray-50">
+    {% include "partials/header.html" %}
+
+    <main id="main-content" class="max-w-7xl mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "partials/footer.html" %}
+
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>
