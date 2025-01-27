@@ -1,0 +1,13 @@
+<div class="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow">
+    <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
+    <div class="space-y-3">
+        {% for action in quick_actions %}
+        <button class="w-full bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-md transition-colors"
+                hx-get="{{ action.url }}"
+                hx-target="#main-content"
+                hx-push-url="true">
+            {{ action.label }}
+        </button>
+        {% endfor %}
+    </div>
+</div>
