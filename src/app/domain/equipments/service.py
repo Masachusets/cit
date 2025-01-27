@@ -10,12 +10,10 @@ from .repository import EquipmentRepository
 
 if TYPE_CHECKING:
     from litestar.contrib.sqlalchemy.repository import SQLAlchemyAsyncRepository
-    from litestar.dto import DTOData
 
 
 class EquipmentService(SQLAlchemyAsyncRepositoryService[Equipment]):
-
-    repository_type: SQLAlchemyAsyncRepository = EquipmentRepository
+    repository_type: SQLAlchemyAsyncRepository = EquipmentRepository  # type: ignore
     match_fields = [
         "it",
         "serial_number",
@@ -37,9 +35,9 @@ class EquipmentService(SQLAlchemyAsyncRepositoryService[Equipment]):
 
     async def create_web(self, data: dict, **kwargs) -> Equipment:
         # Преобразование date_of_manufacture в year_of_manufacture и month_of_manufacture
-        year, month = map(int, data['date_of_manufacture'].split('-'))
-        data['year_of_manufacture'] = year
-        data['month_of_manufacture'] = month
-        del data['date_of_manufacture']
+        year, month = map(int, data["date_of_manufacture"].split("-"))
+        data["year_of_manufacture"] = year
+        data["month_of_manufacture"] = month
+        del data["date_of_manufacture"]
 
         return await super().create(data=data)

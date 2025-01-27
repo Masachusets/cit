@@ -12,6 +12,5 @@ if TYPE_CHECKING:
 
 
 class DepartmentService(SQLAlchemyAsyncRepositoryService[Department]):
-
-    repository_type: SQLAlchemyAsyncRepository = DepartmentRepository
+    repository_type: SQLAlchemyAsyncRepository = DepartmentRepository  # type: ignore
     match_fields = ["slug", "name", "type"]

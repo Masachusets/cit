@@ -4,7 +4,9 @@ from typing import TYPE_CHECKING
 
 from advanced_alchemy.service import SQLAlchemyAsyncRepositoryService
 
-from src.app.domain.reference_book.equipment_names.repository import EquipmentNameRepository
+from src.app.domain.reference_book.equipment_names.repository import (
+    EquipmentNameRepository,
+)
 from src.app.database.models.reference_book.equipment_names import EquipmentName
 
 if TYPE_CHECKING:
@@ -12,6 +14,5 @@ if TYPE_CHECKING:
 
 
 class EquipmentNameService(SQLAlchemyAsyncRepositoryService[EquipmentName]):
-
-    repository_type: SQLAlchemyAsyncRepository = EquipmentNameRepository
+    repository_type: SQLAlchemyAsyncRepository = EquipmentNameRepository  # type: ignore
     match_fields = ["id", "name", "nomenclature_code"]

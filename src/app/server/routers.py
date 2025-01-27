@@ -4,7 +4,9 @@ from src.app.domain.equipments.controllers import EquipmentController
 from src.app.domain.documents.controller import DocumentController
 from src.app.domain.reference_book.department.controller import DepartmentController
 from src.app.domain.reference_book.employee.controller import EmployeeController
-from src.app.domain.reference_book.equipment_names.controller import EquipmentNameController
+from src.app.domain.reference_book.equipment_names.controller import (
+    EquipmentNameController,
+)
 # from src.app.domain.web.controller import WebIndexController, WebEquipmentController
 
 

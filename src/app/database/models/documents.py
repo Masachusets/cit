@@ -1,8 +1,13 @@
+from typing import TYPE_CHECKING
+
 from sqlalchemy import String, Date, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from advanced_alchemy.base import BigIntPrimaryKey
 from .base import BaseStockModel
 from datetime import date
+
+if TYPE_CHECKING:
+    from .equipments import Equipment
 
 
 class Document(BaseStockModel, BigIntPrimaryKey):
@@ -15,12 +20,12 @@ class Document(BaseStockModel, BigIntPrimaryKey):
 
     # relationships
 
-    equipments_in: Mapped[list["Equipment"]] = relationship(
+    equipments_in: Mapped[list[Equipment]] = relationship(
         "Equipment",
         foreign_keys="[Equipment.document_in_id]",
         back_populates="document_in",
     )
-    equipments_out: Mapped[list["Equipment"]] = relationship(
+    equipments_out: Mapped[list[Equipment]] = relationship(
         "Equipment",
         foreign_keys="[Equipment.document_out_id]",
         back_populates="document_out",

@@ -1,8 +1,13 @@
+from typing import TYPE_CHECKING
+
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from advanced_alchemy.base import BigIntPrimaryKey
 
 from ..base import BaseStockModel
+
+if TYPE_CHECKING:
+    from ..equipments import Equipment
 
 
 class EquipmentName(BaseStockModel, BigIntPrimaryKey):
@@ -13,6 +18,6 @@ class EquipmentName(BaseStockModel, BigIntPrimaryKey):
 
     # relationships
 
-    equipments: Mapped[list["Equipment"]] = relationship(
+    equipments: Mapped[list[Equipment]] = relationship(
         "Equipment", back_populates="name"
     )

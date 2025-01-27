@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 from sqlalchemy import String, ForeignKey, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -7,11 +7,15 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import BaseStockModel
 from .custom_types import ITNumberType, YearMonthType
 
+if TYPE_CHECKING:
+    from .documents import Document
+    from .reference_book import EquipmentName, Employee, Department
+
 
 def create_relationship(
-        back_populates: str = "equipments",
-        lazy: str = "selectin", #"joined"
-        **kwargs: Any,
+    back_populates: str = "equipments",
+    lazy: str = "selectin",  # "joined"
+    **kwargs: Any,
 ) -> relationship:
     return relationship(
         back_populates=back_populates,
@@ -44,9 +48,7 @@ class Equipment(BaseStockModel):
     document_out_id: Mapped[int] = mapped_column(
         ForeignKey("documents.id"), nullable=True
     )
-    status: Mapped[EquipmentStatus] = mapped_column(
-        default=EquipmentStatus.EXPLOITED
-    )
+    status: Mapped[EquipmentStatus] = mapped_column(default=EquipmentStatus.EXPLOITED)
     employee_id: Mapped[str] = mapped_column(
         ForeignKey("employees.slug"), nullable=True
     )
@@ -58,14 +60,14 @@ class Equipment(BaseStockModel):
     notes: Mapped[str] = mapped_column(String, nullable=True)
 
     # relationships
-    name: Mapped["EquipmentName"] = create_relationship()
-    employee: Mapped["Employee"] = create_relationship()
-    department: Mapped["Department"] = create_relationship()
-    document_in: Mapped["Document"] = create_relationship(
+    name: Mapped[EquipmentName] = create_relationship()
+    employee: Mapped[Employee] = create_relationship()
+    department: Mapped[Department] = create_relationship()
+    document_in: Mapped[Document] = create_relationship(
         back_populates="equipments_in",
         foreign_keys=[document_in_id],
     )
-    document_out: Mapped["Document"] = create_relationship(
+    document_out: Mapped[Document] = create_relationship(
         back_populates="equipments_out",
         foreign_keys=[document_out_id],
     )

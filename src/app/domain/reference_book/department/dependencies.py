@@ -6,7 +6,7 @@ from src.app.domain.reference_book.department.service import DepartmentService
 
 
 async def provide_department_service(
-        db_session: AsyncSession | None = None,
+    db_session: AsyncSession | None = None,
 ) -> AsyncGenerator[DepartmentService, None]:
     async with DepartmentService.new(db_session) as service:
         yield service

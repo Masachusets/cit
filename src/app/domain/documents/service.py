@@ -11,6 +11,5 @@ if TYPE_CHECKING:
 
 
 class DocumentService(SQLAlchemyAsyncRepositoryService[Document]):
-
-    repository_type: SQLAlchemyAsyncRepository = DocumentRepository
+    repository_type: SQLAlchemyAsyncRepository = DocumentRepository  # type: ignore
     match_fields = ["type", "number", "doc_date", "comment"]

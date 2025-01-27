@@ -6,7 +6,7 @@ from .service import EquipmentService
 
 
 async def provide_item_service(
-        db_session: AsyncSession | None = None,
+    db_session: AsyncSession | None = None,
 ) -> AsyncGenerator[EquipmentService, None]:
     async with EquipmentService.new(db_session) as service:
         yield service

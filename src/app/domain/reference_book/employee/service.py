@@ -12,6 +12,5 @@ if TYPE_CHECKING:
 
 
 class EmployeeService(SQLAlchemyAsyncRepositoryService[Employee]):
-
-    repository_type: SQLAlchemyAsyncRepository = EmployeeRepository
+    repository_type: SQLAlchemyAsyncRepository = EmployeeRepository  # type: ignore
     match_fields = ["slug", "full_name", "card_number"]
