@@ -20,7 +20,6 @@ if TYPE_CHECKING:
 
 
 class EmployeeController(Controller):
-
     dependencies = {"service": Provide(provide_employee_service)}
     tags = ["Employee"]
     return_dto = EmployeeReadDTO
@@ -33,9 +32,9 @@ class EmployeeController(Controller):
         description="Get list of Employees",
     )
     async def get_list(
-            self,
-            service: EmployeeService,
-            # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
+        self,
+        service: EmployeeService,
+        # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
     ) -> OffsetPagination[Employee]:
         """Get list of Employees"""
         results, total = await service.list_and_count()  # (*filters)
@@ -53,15 +52,15 @@ class EmployeeController(Controller):
         description="Retrieve the details of a Employee",
     )
     async def get_employee(
-            self,
-            service: EmployeeService,
-            employee_slug: Annotated[
-                str,
-                Parameter(
-                    title="employee slug",
-                    description="The slug of the Employee to retrieve",
-                ),
-            ],
+        self,
+        service: EmployeeService,
+        employee_slug: Annotated[
+            str,
+            Parameter(
+                title="employee slug",
+                description="The slug of the Employee to retrieve",
+            ),
+        ],
     ) -> Employee:
         """Retrieve the details of a Employee."""
         db_obj = await service.get(employee_slug)
@@ -78,9 +77,9 @@ class EmployeeController(Controller):
         dto=EmployeeCreateDTO,
     )
     async def create_employee(
-            self,
-            service: EmployeeService,
-            data: DTOData[Employee],
+        self,
+        service: EmployeeService,
+        data: DTOData[Employee],
     ) -> Employee:
         """Create a new Employee"""
         db_obj = await service.create(data.create_instance())
@@ -96,16 +95,16 @@ class EmployeeController(Controller):
         dto=EmployeeUpdateDTO,
     )
     async def update_employee(
-            self,
-            service: EmployeeService,
-            data: DTOData[Employee],
-            employee_slug: Annotated[
-                str,
-                Parameter(
-                    title="Employee slug",
-                    description="The slug of the Employee to update",
-                ),
-            ]
+        self,
+        service: EmployeeService,
+        data: DTOData[Employee],
+        employee_slug: Annotated[
+            str,
+            Parameter(
+                title="Employee slug",
+                description="The slug of the Employee to update",
+            ),
+        ],
     ) -> Employee:
         """Update a Employee"""
         db_obj = await service.update(
@@ -124,15 +123,15 @@ class EmployeeController(Controller):
         return_dto=None,
     )
     async def delete_employee(
-            self,
-            service: EmployeeService,
-            employee_slug: Annotated[
-                str,
-                Parameter(
-                    title="Employee slug",
-                    description="The slug of the Employee to delete",
-                ),
-            ],
+        self,
+        service: EmployeeService,
+        employee_slug: Annotated[
+            str,
+            Parameter(
+                title="Employee slug",
+                description="The slug of the Employee to delete",
+            ),
+        ],
     ) -> None:
         """Delete a Employee"""
         await service.delete(employee_slug)
@@ -146,9 +145,9 @@ class EmployeeController(Controller):
         include_in_schema=False,
     )
     async def get_list_web(
-            self,
-            service: EmployeeService,
-            # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
+        self,
+        service: EmployeeService,
+        # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
     ) -> Template:
         """Get list of departments for template"""
         results, total = await service.list_and_count()  # (*filters)

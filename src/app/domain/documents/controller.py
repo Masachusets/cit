@@ -23,7 +23,6 @@ if TYPE_CHECKING:
 
 
 class DocumentController(Controller):
-
     dependencies = {"service": Provide(provide_document_service)}
     tags = ["Document"]
     return_dto = DocumentReadDTO
@@ -36,9 +35,9 @@ class DocumentController(Controller):
         description="Get list of documents",
     )
     async def get_list(
-            self,
-            service: DocumentService,
-            # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
+        self,
+        service: DocumentService,
+        # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
     ) -> OffsetPagination[Document]:
         results, total = await service.list_and_count()  # (*filters)
         return service.to_schema(
@@ -55,15 +54,15 @@ class DocumentController(Controller):
         description="Retrieve the details of a document",
     )
     async def get_document(
-            self,
-            service: DocumentService,
-            document_id: Annotated[
-                int,
-                Parameter(
-                    title="Document ID",
-                    description="The ID of the document to retrieve",
-                ),
-            ],
+        self,
+        service: DocumentService,
+        document_id: Annotated[
+            int,
+            Parameter(
+                title="Document ID",
+                description="The ID of the document to retrieve",
+            ),
+        ],
     ) -> Document:
         """"""
         db_obj = await service.get(document_id)
@@ -80,9 +79,9 @@ class DocumentController(Controller):
         dto=DocumentCreateDTO,
     )
     async def create_document(
-            self,
-            service: DocumentService,
-            data: DTOData[Document],
+        self,
+        service: DocumentService,
+        data: DTOData[Document],
     ) -> Document:
         """Create a new document"""
         db_obj = await service.create(data.create_instance())
@@ -98,16 +97,16 @@ class DocumentController(Controller):
         dto=DocumentUpdateDTO,
     )
     async def update_document(
-            self,
-            service: DocumentService,
-            data: DTOData[Document],
-            document_id: Annotated[
-                int,
-                Parameter(
-                    title="Document ID",
-                    description="The ID of the document to update",
-                ),
-            ]
+        self,
+        service: DocumentService,
+        data: DTOData[Document],
+        document_id: Annotated[
+            int,
+            Parameter(
+                title="Document ID",
+                description="The ID of the document to update",
+            ),
+        ],
     ) -> Document:
         """Update a document"""
         db_obj = await service.update(
@@ -126,15 +125,15 @@ class DocumentController(Controller):
         return_dto=None,
     )
     async def delete_document(
-            self,
-            service: DocumentService,
-            document_id: Annotated[
-                int,
-                Parameter(
-                    title="Document ID",
-                    description="The ID of the document to delete",
-                ),
-            ],
+        self,
+        service: DocumentService,
+        document_id: Annotated[
+            int,
+            Parameter(
+                title="Document ID",
+                description="The ID of the document to delete",
+            ),
+        ],
     ) -> None:
         """Delete a document"""
         await service.delete(document_id)
@@ -148,9 +147,9 @@ class DocumentController(Controller):
         include_in_schema=False,
     )
     async def get_list_web(
-            self,
-            service: DocumentService,
-            # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
+        self,
+        service: DocumentService,
+        # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
     ) -> Template:
         """Get list of departments for template"""
         docs, total = await service.list_and_count()  # (*filters)

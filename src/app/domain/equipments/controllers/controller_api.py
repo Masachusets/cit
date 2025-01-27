@@ -18,7 +18,6 @@ if TYPE_CHECKING:
 
 
 class EquipmentController(Controller):
-
     dependencies = {"service": Provide(provide_item_service)}
     tags = ["Equipment"]
     return_dto = EquipmentReadDTO
@@ -31,9 +30,9 @@ class EquipmentController(Controller):
         description="Get list of items",
     )
     async def get_list(
-            self,
-            service: EquipmentService,
-            # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
+        self,
+        service: EquipmentService,
+        # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
     ) -> OffsetPagination[Equipment]:
         results, total = await service.list_and_count()  # (*filters)
         return service.to_schema(
@@ -50,15 +49,15 @@ class EquipmentController(Controller):
         description="Retrieve the details of a item",
     )
     async def get_item(
-            self,
-            service: EquipmentService,
-            item_it: Annotated[
-                str,
-                Parameter(
-                    title="Equipment ID",
-                    description="The ID of the item to retrieve",
-                ),
-            ],
+        self,
+        service: EquipmentService,
+        item_it: Annotated[
+            str,
+            Parameter(
+                title="Equipment ID",
+                description="The ID of the item to retrieve",
+            ),
+        ],
     ) -> Equipment:
         """Retrieve the details of a item."""
         db_obj = await service.get(item_it)
@@ -75,9 +74,9 @@ class EquipmentController(Controller):
         dto=EquipmentCreateDTO,
     )
     async def create_item(
-            self,
-            service: EquipmentService,
-            data: DTOData[Equipment],
+        self,
+        service: EquipmentService,
+        data: DTOData[Equipment],
     ) -> Equipment:
         """Create a new item"""
         db_obj = await service.create(data.create_instance())
@@ -93,16 +92,16 @@ class EquipmentController(Controller):
         dto=EquipmentUpdateDTO,
     )
     async def update_item(
-            self,
-            service: EquipmentService,
-            data: DTOData[Equipment],
-            item_it: Annotated[
-                str,
-                Parameter(
-                    title="Equipment IT",
-                    description="The IT of the item to update",
-                ),
-            ]
+        self,
+        service: EquipmentService,
+        data: DTOData[Equipment],
+        item_it: Annotated[
+            str,
+            Parameter(
+                title="Equipment IT",
+                description="The IT of the item to update",
+            ),
+        ],
     ) -> Equipment:
         """Update a item"""
         db_obj = await service.update(
@@ -121,15 +120,15 @@ class EquipmentController(Controller):
         return_dto=None,
     )
     async def delete_item(
-            self,
-            service: EquipmentService,
-            item_it: Annotated[
-                str,
-                Parameter(
-                    title="Equipment IT",
-                    description="The IT of the item to delete",
-                ),
-            ],
+        self,
+        service: EquipmentService,
+        item_it: Annotated[
+            str,
+            Parameter(
+                title="Equipment IT",
+                description="The IT of the item to delete",
+            ),
+        ],
     ) -> None:
         """Delete a item"""
         await service.delete(item_it)

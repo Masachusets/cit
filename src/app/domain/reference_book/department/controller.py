@@ -7,8 +7,13 @@ from litestar.di import Provide
 from litestar.response import Template
 
 from src.app.domain.reference_book.department import urls
-from src.app.domain.reference_book.department.dependencies import provide_department_service
-from src.app.domain.reference_book.department.dto import DepartmentReadCreateDTO, DepartmentUpdateDTO
+from src.app.domain.reference_book.department.dependencies import (
+    provide_department_service,
+)
+from src.app.domain.reference_book.department.dto import (
+    DepartmentReadCreateDTO,
+    DepartmentUpdateDTO,
+)
 from src.app.domain.reference_book.department.service import DepartmentService
 from src.app.database.models.reference_book.departments import Department
 
@@ -19,7 +24,6 @@ if TYPE_CHECKING:
 
 
 class DepartmentController(Controller):
-
     dependencies = {"service": Provide(provide_department_service)}
     tags = ["Department"]
     return_dto = DepartmentReadCreateDTO
@@ -32,9 +36,9 @@ class DepartmentController(Controller):
         description="Get list of departments",
     )
     async def get_list(
-            self,
-            service: DepartmentService,
-            # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
+        self,
+        service: DepartmentService,
+        # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
     ) -> OffsetPagination[Department]:
         """Get list of departments"""
         results, total = await service.list_and_count()  # (*filters)
@@ -52,15 +56,15 @@ class DepartmentController(Controller):
         description="Retrieve the details of a department",
     )
     async def get_department(
-            self,
-            service: DepartmentService,
-            department_slug: Annotated[
-                str,
-                Parameter(
-                    title="Department slug",
-                    description="The slug of the department to retrieve",
-                ),
-            ],
+        self,
+        service: DepartmentService,
+        department_slug: Annotated[
+            str,
+            Parameter(
+                title="Department slug",
+                description="The slug of the department to retrieve",
+            ),
+        ],
     ) -> Department:
         """Retrieve the details of a department."""
         db_obj = await service.get(department_slug)
@@ -77,9 +81,9 @@ class DepartmentController(Controller):
         dto=DepartmentReadCreateDTO,
     )
     async def create_department(
-            self,
-            service: DepartmentService,
-            data: DTOData[Department],
+        self,
+        service: DepartmentService,
+        data: DTOData[Department],
     ) -> Department:
         """Create a new department"""
         db_obj = await service.create(data.create_instance())
@@ -95,16 +99,16 @@ class DepartmentController(Controller):
         dto=DepartmentUpdateDTO,
     )
     async def update_department(
-            self,
-            service: DepartmentService,
-            data: DTOData[Department],
-            department_slug: Annotated[
-                str,
-                Parameter(
-                    title="Department slug",
-                    description="The slug of the department to update",
-                ),
-            ]
+        self,
+        service: DepartmentService,
+        data: DTOData[Department],
+        department_slug: Annotated[
+            str,
+            Parameter(
+                title="Department slug",
+                description="The slug of the department to update",
+            ),
+        ],
     ) -> Department:
         """Update a department"""
         db_obj = await service.update(
@@ -123,15 +127,15 @@ class DepartmentController(Controller):
         return_dto=None,
     )
     async def delete_department(
-            self,
-            service: DepartmentService,
-            department_slug: Annotated[
-                str,
-                Parameter(
-                    title="Department ID",
-                    description="The ID of the department to delete",
-                ),
-            ],
+        self,
+        service: DepartmentService,
+        department_slug: Annotated[
+            str,
+            Parameter(
+                title="Department ID",
+                description="The ID of the department to delete",
+            ),
+        ],
     ) -> None:
         """Delete a department"""
         await service.delete(department_slug)
@@ -145,9 +149,9 @@ class DepartmentController(Controller):
         include_in_schema=False,
     )
     async def get_list_web(
-            self,
-            service: DepartmentService,
-            # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
+        self,
+        service: DepartmentService,
+        # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
     ) -> Template:
         """Get list of departments for template"""
         results, total = await service.list_and_count()  # (*filters)

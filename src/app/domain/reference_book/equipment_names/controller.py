@@ -7,8 +7,13 @@ from litestar.di import Provide
 from litestar.response import Template
 
 from src.app.domain.reference_book.equipment_names import urls
-from src.app.domain.reference_book.equipment_names.dependencies import provide_item_name_service
-from src.app.domain.reference_book.equipment_names.dto import EquipmentNameReadCreateDTO, EquipmentNameUpdateDTO
+from src.app.domain.reference_book.equipment_names.dependencies import (
+    provide_item_name_service,
+)
+from src.app.domain.reference_book.equipment_names.dto import (
+    EquipmentNameReadCreateDTO,
+    EquipmentNameUpdateDTO,
+)
 from src.app.domain.reference_book.equipment_names.service import EquipmentNameService
 from src.app.database.models.reference_book.equipment_names import EquipmentName
 
@@ -19,7 +24,6 @@ if TYPE_CHECKING:
 
 
 class EquipmentNameController(Controller):
-
     dependencies = {"service": Provide(provide_item_name_service)}
     tags = ["EquipmentName"]
     return_dto = EquipmentNameReadCreateDTO
@@ -32,9 +36,9 @@ class EquipmentNameController(Controller):
         description="Get list of EquipmentNames",
     )
     async def get_list(
-            self,
-            service: EquipmentNameService,
-            # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
+        self,
+        service: EquipmentNameService,
+        # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
     ) -> OffsetPagination[EquipmentName]:
         """Get list of EquipmentNames"""
         results, total = await service.list_and_count()  # (*filters)
@@ -52,15 +56,15 @@ class EquipmentNameController(Controller):
         description="Retrieve the details of a EquipmentName",
     )
     async def get_item_name(
-            self,
-            service: EquipmentNameService,
-            id: Annotated[
-                int,
-                Parameter(
-                    title="EquipmentName id",
-                    description="The id of the EquipmentName to retrieve",
-                ),
-            ],
+        self,
+        service: EquipmentNameService,
+        id: Annotated[
+            int,
+            Parameter(
+                title="EquipmentName id",
+                description="The id of the EquipmentName to retrieve",
+            ),
+        ],
     ) -> EquipmentName:
         """Retrieve the details of a EquipmentName."""
         db_obj = await service.get(id)
@@ -77,9 +81,9 @@ class EquipmentNameController(Controller):
         dto=EquipmentNameReadCreateDTO,
     )
     async def create_item_name(
-            self,
-            service: EquipmentNameService,
-            data: DTOData[EquipmentName],
+        self,
+        service: EquipmentNameService,
+        data: DTOData[EquipmentName],
     ) -> EquipmentName:
         """Create a new EquipmentName"""
         db_obj = await service.create(data.create_instance())
@@ -95,16 +99,16 @@ class EquipmentNameController(Controller):
         dto=EquipmentNameUpdateDTO,
     )
     async def update_item_name(
-            self,
-            service: EquipmentNameService,
-            data: DTOData[EquipmentName],
-            id: Annotated[
-                int,
-                Parameter(
-                    title="EquipmentName nomenclature_code",
-                    description="The nomenclature_code of the EquipmentName to update",
-                ),
-            ]
+        self,
+        service: EquipmentNameService,
+        data: DTOData[EquipmentName],
+        id: Annotated[
+            int,
+            Parameter(
+                title="EquipmentName nomenclature_code",
+                description="The nomenclature_code of the EquipmentName to update",
+            ),
+        ],
     ) -> EquipmentName:
         """Update a EquipmentName"""
         db_obj = await service.update(
@@ -123,15 +127,15 @@ class EquipmentNameController(Controller):
         return_dto=None,
     )
     async def delete_item_name(
-            self,
-            service: EquipmentNameService,
-            id: Annotated[
-                int,
-                Parameter(
-                    title="EquipmentName id",
-                    description="The id of the EquipmentName to delete",
-                ),
-            ],
+        self,
+        service: EquipmentNameService,
+        id: Annotated[
+            int,
+            Parameter(
+                title="EquipmentName id",
+                description="The id of the EquipmentName to delete",
+            ),
+        ],
     ) -> None:
         """Delete a EquipmentName"""
         await service.delete(id)
@@ -145,9 +149,9 @@ class EquipmentNameController(Controller):
         include_in_schema=False,
     )
     async def get_list_web(
-            self,
-            service: EquipmentNameService,
-            # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
+        self,
+        service: EquipmentNameService,
+        # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
     ) -> Template:
         """Get list of departments for template"""
         results, total = await service.list_and_count()  # (*filters)
