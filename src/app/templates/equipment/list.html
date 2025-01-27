@@ -1,0 +1,10 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Equipment Accounting{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    {% include "partials/equipment/equipment_header.html" %}
+    {% include "partials/equipment/equipment_table.html" %}
+</div>
+{% endblock %}

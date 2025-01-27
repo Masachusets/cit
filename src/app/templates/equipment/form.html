@@ -1,0 +1,24 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}{% if equipment %}Edit {{ equipment.it }}{% else %}New Equipment{% endif %}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto bg-base-100 p-6 rounded-lg shadow">
+        <h2 class="text-2xl font-bold mb-6">
+            {% if equipment %}Edit Equipment{% else %}Create New Equipment{% endif %}
+        </h2>
+
+        <form method="post"
+              {% if equipment %}hx-put="/equipments/{{ equipment.it }}"{% else %}hx-post="/equipments"{% endif %}
+              hx-target="#main-content"
+              hx-push-url="true">
+
+            <div class="grid grid-cols-1 gap-6">
+                {% include "partials/equipment/form_fields.html" %}
+                {% include "partials/equipment/form_actions.html" %}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

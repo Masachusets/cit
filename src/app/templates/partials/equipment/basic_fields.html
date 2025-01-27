@@ -1,0 +1,50 @@
+<!-- IT Number -->
+<div class="form-control">
+    <label class="label">
+        <span class="label-text">IT Number*</span>
+    </label>
+    <input type="text"
+           class="input input-bordered"
+           name="it"
+           value="{{ equipment.it if equipment }}"
+           required>
+</div>
+
+<!-- Serial Number -->
+<div class="form-control">
+    <label class="label">
+        <span class="label-text">Serial Number*</span>
+    </label>
+    <input type="text"
+           class="input input-bordered"
+           name="serial_number"
+           value="{{ equipment.serial_number if equipment }}"
+           required>
+</div>
+
+<!-- Name and Model -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="form-control">
+        <label class="label">
+            <span class="label-text">Equipment Name*</span>
+        </label>
+        <select class="select select-bordered" name="name_id" required>
+            {% for name in equipment_names %}
+            <option value="{{ name.id }}"
+                    {% if equipment and equipment.name_id == name.id %}selected{% endif %}>
+                {{ name.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-control">
+        <label class="label">
+            <span class="label-text">Model</span>
+        </label>
+        <input type="text"
+               class="input input-bordered"
+               name="model"
+               value="{{ equipment.model if equipment }}">
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="form-control">
+    <label class="label">
+        <span class="label-text">Status*</span>
+    </label>
+    <select class="select select-bordered" name="status" required>
+        {% for status in equipment_statuses %}
+        <option value="{{ status.value }}"
+                {% if equipment and equipment.status == status %}selected{% endif %}
+        >
+            {{ status.value|title }}
+        </option>
+        {% endfor %}
+    </select>
+</div>

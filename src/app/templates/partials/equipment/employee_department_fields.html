@@ -1,0 +1,72 @@
+<div x-data="{ assignmentType: '{{ 'employee' if equipment and equipment.employee else 'department' if equipment and equipment.department else '' }}' }"
+     class="space-y-4">
+    <div class="form-control">
+        <label class="label">
+            <span class="label-text">Assignment Type*</span>
+        </label>
+        <div class="flex gap-4">
+            <label class="cursor-pointer label">
+                <input type="radio"
+                       name="assignment_type"
+                       class="radio radio-primary"
+                       value="employee"
+                       x-model="assignmentType"
+                       required
+                >
+                <span class="label-text ml-2">Employee</span>
+            </label>
+            <label class="cursor-pointer label">
+                <input type="radio"
+                       name="assignment_type"
+                       class="radio radio-primary"
+                       value="department"
+                       x-model="assignmentType"
+                       required
+                >
+                <span class="label-text ml-2">Department</span>
+            </label>
+        </div>
+    </div>
+
+    <div x-show="assignmentType === 'employee'">
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Employee*</span>
+            </label>
+            <select class="select select-bordered"
+                    name="employee_id"
+                    x-bind:required="assignmentType === 'employee'"
+            >
+                <option value="">Select Employee</option>
+                {% for employee in employees %}
+                <option value="{{ employee.slug }}"
+                        {% if equipment and equipment.employee_id == employee.slug %}selected{% endif %}
+                >
+                    {{ employee.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div x-show="assignmentType === 'department'">
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Department*</span>
+            </label>
+            <select class="select select-bordered"
+                    name="department_id"
+                    x-bind:required="assignmentType === 'department'"
+            >
+                <option value="">Select Department</option>
+                {% for department in departments %}
+                <option value="{{ department.slug }}"
+                        {% if equipment and equipment.department_id == department.slug %}selected{% endif %}
+                >
+                    {{ department.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {% include "partials/equipment/status_dropdown.html" %}
+
+    <div class="form-control">
+        <label class="label">
+            <span class="label-text">Location</span>
+        </label>
+        <input type="text"
+               class="input input-bordered"
+               name="location"
+               value="{{ equipment.location if equipment }}"
+        >
+    </div>
+</div>

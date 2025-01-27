@@ -1,0 +1,29 @@
+<tr>
+    <td>
+        <a class="link link-primary"
+           hx-get="/equipments/{{ equipment.it }}"
+           hx-target="#main-content"
+           hx-push-url="true">
+            {{ equipment.it }}
+        </a>
+    </td>
+    <td>{{ equipment.serial_number }}</td>
+    <td>{{ equipment.name.name }}</td>
+    <td>{{ equipment.model }}</td>
+    <td>
+        <span class="badge badge-{{ equipment.status|status_badge }}">
+            {{ equipment.status|title }}
+        </span>
+    </td>
+    <td>
+        {% if equipment.employee %}
+            👤 {{ equipment.employee.name }}
+        {% elif equipment.department %}
+            🏢 {{ equipment.department.name }}
+        {% endif %}
+    </td>
+    <td class="max-w-xs truncate">{{ equipment.notes }}</td>
+    <td>
+        {% include "partials/equipment/delete_button.html" %}
+    </td>
+</tr>

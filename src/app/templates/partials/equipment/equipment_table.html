@@ -1,0 +1,10 @@
+<div class="overflow-x-auto">
+    <table class="table table-zebra" id="equipment-table">
+        {% include "partials/equipment/table_head.html" %}
+        <tbody>
+            {% for equipment in equipments %}
+                {% include "partials/equipment/equipment_row.html" %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

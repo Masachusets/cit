@@ -1,0 +1,13 @@
+<div class="flex justify-end gap-4 mt-6">
+    <button type="button"
+            class="btn btn-ghost"
+            hx-get="/equipments"
+            hx-target="#main-content"
+            hx-push-url="true"
+    >
+        Cancel
+    </button>
+    <button type="submit" class="btn btn-primary">
+        {% if equipment %}Update{% else %}Create{% endif %}
+    </button>
+</div>

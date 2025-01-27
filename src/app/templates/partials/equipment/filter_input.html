@@ -1,0 +1,9 @@
+<input type="text"
+       class="input input-bordered flex-grow"
+       placeholder="Filter equipment..."
+       name="filter"
+       hx-get="/equipments"
+       hx-trigger="keyup changed delay:500ms"
+       hx-target="#equipment-table"
+       hx-params="filter"
+>
