@@ -28,10 +28,10 @@ repos:
 #      - id: mypy
 #        additional_dependencies: [types-all]
 
-  - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.391
-    hooks:
-      - id: pyright
+#  - repo: https://github.com/RobertCraigie/pyright-python
+#    rev: v1.1.391
+#    hooks:
+#      - id: pyright
 #
 #  - repo: local
 #    hooks:
