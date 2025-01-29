@@ -17,7 +17,12 @@ def create_app() -> Litestar:
         dependencies=dependencies,
         debug=settings.app.DEBUG,
         route_handlers=routers,
-        static_files_config=[StaticFilesConfig(directories=["static"], path="/static")],
+        static_files_config=[
+            StaticFilesConfig(
+                path="/static",
+                directories=["src/app/static"],
+            ),
+        ],
         plugins=[alchemy, app_config],
         template_config=TemplateConfig(
             directory="templates",
