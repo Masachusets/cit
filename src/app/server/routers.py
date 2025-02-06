@@ -10,7 +10,7 @@ from src.app.domain.reference_book.equipment_names.controller import (
 )
 
 # from src.app.domain.web.controller import WebIndexController, WebEquipmentController
-from src.app.domain.web.controllers.main_page_controller import MainPageController
+from src.app.domain.web.controllers.main_page import MainPageController
 
 
 def create_api_router() -> Router:
