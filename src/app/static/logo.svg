@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <!-- Background Rectangle -->
+  <rect width="400" height="120" fill="#F3F4F6" rx="10" />
+
+  <!-- Computer Icon -->
+  <g transform="translate(20, 20)">
+    <rect x="0" y="0" width="80" height="60" fill="#2563EB" rx="10" />
+    <rect x="10" y="10" width="60" height="40" fill="#1E40AF" rx="5" />
+    <rect x="30" y="60" width="20" height="10" fill="#2563EB" rx="3" />
+    <rect x="25" y="70" width="30" height="5" fill="#2563EB" rx="2" />
+  </g>
+</svg>
