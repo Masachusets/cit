@@ -1,6 +1,5 @@
 from litestar import Litestar
 from litestar.contrib.jinja import JinjaTemplateEngine
-from litestar.static_files import StaticFilesConfig
 from litestar.template.config import TemplateConfig
 
 
@@ -17,15 +16,9 @@ def create_app() -> Litestar:
         dependencies=dependencies,
         debug=settings.app.DEBUG,
         route_handlers=routers,
-        static_files_config=[
-            StaticFilesConfig(
-                path="/static",
-                directories=["src/app/static"],
-            ),
-        ],
         plugins=[alchemy, app_config],
         template_config=TemplateConfig(
-            directory="templates",
+            directory="src/app/templates",
             engine=JinjaTemplateEngine,
         ),
     )
