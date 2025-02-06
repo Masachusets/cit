@@ -192,7 +192,7 @@ class AppSettings:
         default_factory=lambda: os.getenv("APP_URL", "http://127.0.0.1:8000")
     )
     DEBUG: bool = field(
-        default_factory=lambda: os.getenv("APP_DEBUG", False) in TRUE_VALUES
+        default_factory=lambda: os.getenv("APP_DEBUG", "True") in TRUE_VALUES
     )
     SECRET_KEY: str = field(
         default_factory=lambda: os.getenv(
