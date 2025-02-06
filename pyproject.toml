@@ -10,6 +10,7 @@ requires-python = ">=3.13"
 dependencies = [
     "advanced-alchemy>=0.26.2",
     "aiosqlite>=0.20.0",
+    "greenlet>=3.1.1",
     "jinja2>=3.1.5",
     "litestar>=2.13.0",
     "python-dotenv>=1.0.1",
