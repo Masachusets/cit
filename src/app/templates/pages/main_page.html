@@ -4,9 +4,8 @@
 
 {% block content %}
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    {% include "components/cards/status_card.html" with {
-        status_message: 'All systems operational'
-    } %}
+    {% set status_message = 'All systems operational' %}
+    {% include "components/cards/status_card.html" %}
 
     {% include "components/cards/tickets_card.html" %}
 
