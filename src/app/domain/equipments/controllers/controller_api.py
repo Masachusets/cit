@@ -6,7 +6,7 @@ from litestar import Controller, get, post, delete, patch
 from litestar.di import Provide
 
 from .. import urls
-from ..dependencies import provide_item_service
+from ..dependencies import provide_equipment_service
 from ..dto import EquipmentReadDTO, EquipmentCreateDTO, EquipmentUpdateDTO
 from ..service import EquipmentService
 from src.app.database.models import Equipment
@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 
 class EquipmentController(Controller):
-    dependencies = {"service": Provide(provide_item_service)}
+    dependencies = {"service": Provide(provide_equipment_service)}
     tags = ["Equipment"]
     return_dto = EquipmentReadDTO
 
