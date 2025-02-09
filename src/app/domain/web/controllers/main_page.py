@@ -3,7 +3,7 @@ from litestar.response import Template
 
 
 class MainPageController(Controller):
-    path = "/"
+    path = "/index"
 
     @get(
         path="",

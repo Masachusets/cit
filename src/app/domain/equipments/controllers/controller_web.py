@@ -2,14 +2,13 @@ from litestar import Controller, get
 from litestar.di import Provide
 from litestar.response import Template
 
-
 from ..dependencies import provide_equipment_service
 from ..service import EquipmentService
 
 
 class EquipmentWebController(Controller):
     include_in_schema = False
-    path = "/items"
+    path = "/equipments"
     dependencies = {"service": Provide(provide_equipment_service)}
 
     @get(
@@ -22,11 +21,47 @@ class EquipmentWebController(Controller):
         service: EquipmentService,
         # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
     ) -> Template:
-        results, total = await service.list_and_count()  # (*filters)
-        template_name = "items/items-list.html"
+        results, total = (
+            [
+                {
+                    "it": "IT00001",
+                    "serial_number": "б/н",
+                    "name": {"id": 1, "name": "Name 1"},
+                    "model": "Model 1",
+                    "manufacture_date": "2022-01",
+                    "arrival_date": "2022-01",
+                    "document_in_id": None,
+                    "document_out_id": None,
+                    "status": "exploited",
+                    "form_number": None,
+                    "department": None,
+                    "employee": {"slug": "slug", "name": "name"},
+                    "location": None,
+                    "notes": "",
+                },
+                {
+                    "it": "IT00002",
+                    "serial_number": "б/н",
+                    "name": {"id": 2, "name": "Printer"},
+                    "model": "Model 1",
+                    "manufacture_date": "2024-01",
+                    "arrival_date": "2024-02",
+                    "document_in_id": None,
+                    "document_out_id": None,
+                    "status": "exploited",
+                    "form_number": None,
+                    "department": None,
+                    "employee": {"slug": "slug1", "name": "Ivanov Ivan Ivanovich"},
+                    "location": None,
+                    "notes": "notes",
+                },
+            ],
+            2,
+        )  # await service.list_and_count()  # (*filters)
+        template_name = "equipment/list.html"
         return Template(
             template_name=template_name,
-            context={"items": results, "total": total},
+            context={"equipments": results, "total": total},
         )
 
     # @get(
