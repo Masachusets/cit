@@ -1,17 +1,22 @@
+<!-- partials/nav_items.html -->
 <a href="/"
-   class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
+   class="px-4 py-2 rounded-lg flex items-center gap-2 transition-colors
+          {{ 'bg-primary/20 text-primary' if request.path == '/' else 'hover:bg-primary/10' }}"
    hx-get="/"
    hx-target="#main-content"
    hx-push-url="true"
 >
-    Home
+    <i class="fas fa-home"></i>
+    <span class="font-medium">На главную</span>
 </a>
 
 <a href="/knowledge-base"
-   class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium"
+   class="px-4 py-2 rounded-lg flex items-center gap-2 transition-colors
+          {{ 'bg-primary/20 text-primary' if request.path == '/knowledge-base' else 'hover:bg-primary/10' }}"
    hx-get="/knowledge-base"
    hx-target="#main-content"
    hx-push-url="true"
 >
-    Knowledge Base
+    <i class="fas fa-book-open"></i>
+    <span class="font-medium">База знаний</span>
 </a>

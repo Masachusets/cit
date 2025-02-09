@@ -1,15 +1,15 @@
 <!-- templates/layouts/base.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="corporate">
 
 <head>
     {% include "partials/head.html" %}
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-base-100">
     {% include "partials/header.html" %}
 
-    <main id="main-content" class="max-w-7xl mx-auto px-4 py-8">
+    <main id="main-content" class="max-w-7xl mx-auto px-4 py-8 bg-base-50 rounded-lg shadow-sm">
         {% block content %}{% endblock %}
     </main>
 
