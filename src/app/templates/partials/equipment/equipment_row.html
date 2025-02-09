@@ -1,29 +1,34 @@
-<tr>
-    <td>
-        <a class="link link-primary"
+<!-- partials/equipment/equipment_row.html -->
+<tr class="hover:bg-base-100">
+    <td class="px-6 py-4 whitespace-nowrap">
+        <a class="link link-primary font-medium hover:text-primary-focus"
            hx-get="/equipments/{{ equipment.it }}"
            hx-target="#main-content"
            hx-push-url="true">
             {{ equipment.it }}
         </a>
     </td>
-    <td>{{ equipment.serial_number }}</td>
-    <td>{{ equipment.name.name }}</td>
-    <td>{{ equipment.model }}</td>
-    <td>
-        <span class="badge badge-{{ equipment.status|status_badge }}">
-            {{ equipment.status|title }}
+    <td class="px-6 py-4 whitespace-nowrap">{{ equipment.serial_number }}</td>
+    <td class="px-6 py-4 whitespace-nowrap">{{ equipment.name.name }}</td>
+    <td class="px-6 py-4 whitespace-nowrap">{{ equipment.model }}</td>
+    <td class="px-6 py-4 whitespace-nowrap">
+        <span class="badge badge-lg badge-{{ equipment.status }}">
+            {{ equipment.status }}
         </span>
     </td>
-    <td>
+    <td class="px-6 py-4 whitespace-nowrap">
         {% if equipment.employee %}
-            👤 {{ equipment.employee.name }}
+            <span class="flex items-center gap-2">
+                👤 <span class="font-medium">{{ equipment.employee.name }}</span>
+            </span>
         {% elif equipment.department %}
-            🏢 {{ equipment.department.name }}
+            <span class="flex items-center gap-2">
+                🏢 <span class="font-medium">{{ equipment.department.name }}</span>
+            </span>
         {% endif %}
     </td>
-    <td class="max-w-xs truncate">{{ equipment.notes }}</td>
-    <td>
+    <td class="px-6 py-4 max-w-xs prose prose-sm truncate">{{ equipment.notes }}</td>
+    <td class="px-6 py-4 whitespace-nowrap text-right">
         {% include "partials/equipment/delete_button.html" %}
     </td>
 </tr>
