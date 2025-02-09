@@ -1,7 +1,10 @@
 from litestar import Router
 from litestar.static_files import create_static_files_router
 
-from src.app.domain.equipments.controllers import EquipmentController
+from src.app.domain.equipments.controllers import (
+    EquipmentController,
+    EquipmentWebController,
+)
 from src.app.domain.documents.controller import DocumentController
 from src.app.domain.reference_book.department.controller import DepartmentController
 from src.app.domain.reference_book.employee.controller import EmployeeController
@@ -32,7 +35,7 @@ def create_web_router() -> Router:
         route_handlers=[
             MainPageController,
             # WebIndexController,
-            # WebEquipmentController,
+            EquipmentWebController,
         ],
     )
 
