@@ -23,11 +23,11 @@ class EquipmentController(Controller):
     return_dto = EquipmentReadDTO
 
     @get(
-        path=urls.ITEM_LIST,
+        path=urls.EQUIPMENT_LIST,
         operation_id="ListEquipments",
-        name="items:list",
-        summary="List of items",
-        description="Get list of items",
+        name="equipments:list",
+        summary="List of equipments",
+        description="Get list of equipments",
     )
     async def get_list(
         self,
@@ -42,16 +42,16 @@ class EquipmentController(Controller):
         )
 
     @get(
-        path=urls.ITEM_DETAIL,
+        path=urls.EQUIPMENT_DETAIL,
         operation_id="GetEquipment",
-        name="items:get",
-        summary="Get item",
-        description="Retrieve the details of a item",
+        name="equipments:get",
+        summary="Get equipment",
+        description="Retrieve the details of an equipment",
     )
-    async def get_item(
+    async def get_equipment(
         self,
         service: EquipmentService,
-        item_it: Annotated[
+        equipment_it: Annotated[
             str,
             Parameter(
                 title="Equipment ID",
@@ -59,43 +59,43 @@ class EquipmentController(Controller):
             ),
         ],
     ) -> Equipment:
-        """Retrieve the details of a item."""
-        db_obj = await service.get(item_it)
+        """Retrieve the details of an equipment"""
+        db_obj = await service.get(equipment_it)
         return service.to_schema(db_obj)
 
     @post(
-        path=urls.ITEM_CREATE,
+        path=urls.EQUIPMENT_CREATE,
         operation_id="CreateEquipment",
-        name="items:create",
-        summary="Create item",
-        description="Create a new item",
+        name="equipments:create",
+        summary="Create equipment",
+        description="Create a new equipment",
         # guards=[],
         cache_control=None,
         dto=EquipmentCreateDTO,
     )
-    async def create_item(
+    async def create_equipment(
         self,
         service: EquipmentService,
         data: DTOData[Equipment],
     ) -> Equipment:
-        """Create a new item"""
-        db_obj = await service.create(data.create_instance())
+        """Create a new equipment"""
+        db_obj = await service.create(data)
         return service.to_schema(db_obj)
 
     @patch(
-        path=urls.ITEM_UPDATE,
+        path=urls.EQUIPMENT_UPDATE,
         operation_id="UpdateEquipment",
-        name="items:update",
-        summary="Update a item",
-        description="Update the details of a item",
+        name="equipments:update",
+        summary="Update an equipment",
+        description="Update the details of an equipment",
         # guards=[],
         dto=EquipmentUpdateDTO,
     )
-    async def update_item(
+    async def update_equipment(
         self,
         service: EquipmentService,
         data: DTOData[Equipment],
-        item_it: Annotated[
+        equipment_it: Annotated[
             str,
             Parameter(
                 title="Equipment IT",
@@ -103,32 +103,32 @@ class EquipmentController(Controller):
             ),
         ],
     ) -> Equipment:
-        """Update a item"""
+        """Update an equipment"""
         db_obj = await service.update(
-            item_id=item_it,
+            item_id=equipment_it,
             data=data.create_instance(),
         )
         return service.to_schema(db_obj)
 
     @delete(
-        path=urls.ITEM_DELETE,
+        path=urls.EQUIPMENT_DELETE,
         operation_id="DeleteEquipment",
         name="items:delete",
-        summary="Delete item",
-        description="Delete a item",
+        summary="Delete equipment",
+        description="Delete an equipment",
         # guards=[],
         return_dto=None,
     )
-    async def delete_item(
+    async def delete_equipment(
         self,
         service: EquipmentService,
-        item_it: Annotated[
+        equipment_it: Annotated[
             str,
             Parameter(
                 title="Equipment IT",
-                description="The IT of the item to delete",
+                description="The IT of the equipment to delete",
             ),
         ],
     ) -> None:
-        """Delete a item"""
-        await service.delete(item_it)
+        """Delete an equipment"""
+        await service.delete(equipment_it)
