@@ -34,7 +34,6 @@ def create_web_router() -> Router:
         path="/",
         route_handlers=[
             MainPageController,
-            # WebIndexController,
             EquipmentWebController,
         ],
     )
@@ -43,7 +42,7 @@ def create_web_router() -> Router:
 def get_routers() -> list[Router]:
     return [
         create_web_router(),
-        # create_api_router(),
+        create_api_router(),
         create_static_files_router(
             path="/static",
             name="static",
