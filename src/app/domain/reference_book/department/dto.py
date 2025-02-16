@@ -4,7 +4,9 @@ from src.app.database.models.reference_book.departments import Department
 
 
 class DepartmentReadCreateDTO(SQLAlchemyDTO[Department]):
-    config = SQLAlchemyDTOConfig()
+    config = SQLAlchemyDTOConfig(
+        exclude={"equipments"},
+    )
 
 
 class DepartmentUpdateDTO(SQLAlchemyDTO[Department]):
