@@ -7,7 +7,6 @@ from sqlalchemy import String, ForeignKey, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import BaseStockModel
-from .custom_types import ITNumberType, YearMonthType
 
 if TYPE_CHECKING:
     from .documents import Document
@@ -27,23 +26,35 @@ def create_relationship(
 
 
 class EquipmentStatus(str, Enum):
-    EXPLOITED = "exploited"
-    INTERNET = "internet"
-    SVT = "svt"
-    FAULTY = "faulty"
-    RESERVE = "reserve"
-    WRITE_OFF = "write_off"
+    EXPLOITED = "экспл."
+    INTERNET = "интернет"
+    SVT = "свт"
+    FAULTY = "неисправен"
+    RESERVE = "резерв"
+    WRITE_OFF = "списан"
 
 
 class Equipment(BaseStockModel):
-    __tablename__ = "equipment"
+    __tablename__ = "equipments"
 
-    it: Mapped[str] = mapped_column(ITNumberType, primary_key=True)
+    it: Mapped[str] = mapped_column(
+        # ITNumberType,
+        String(7),
+        primary_key=True,
+    )
     name_id: Mapped[int] = mapped_column(ForeignKey("equipment_names.id"))
     model: Mapped[str] = mapped_column(String, nullable=True)
     serial_number: Mapped[str] = mapped_column(String(50))
-    manufacture_date: Mapped[str] = mapped_column(YearMonthType, nullable=True)
-    arrival_date: Mapped[str] = mapped_column(YearMonthType, nullable=True)
+    manufacture_date: Mapped[str] = mapped_column(
+        # YearMonthType,
+        String(7),
+        nullable=True,
+    )
+    arrival_date: Mapped[str] = mapped_column(
+        # YearMonthType,
+        String(7),
+        nullable=True,
+    )
     document_in_id: Mapped[int] = mapped_column(
         ForeignKey("documents.id"), nullable=True
     )
@@ -58,6 +69,7 @@ class Equipment(BaseStockModel):
         ForeignKey("departments.slug"), nullable=True
     )
     form_number: Mapped[str] = mapped_column(String(5), nullable=True)
+    consignment_number: Mapped[str] = mapped_column(String(5), nullable=True)
     location: Mapped[str] = mapped_column(String(50), nullable=True)
     notes: Mapped[str] = mapped_column(String, nullable=True)
 
@@ -78,5 +90,9 @@ class Equipment(BaseStockModel):
         CheckConstraint(
             "(employee_id IS NULL) != (department_id IS NULL)",
             name="check_employee_or_department",
+        ),
+        CheckConstraint(
+            "consignment_number IS NULL OR department_id IS NOT NULL",
+            name="check_consignment_requires_department",
         ),
     )
