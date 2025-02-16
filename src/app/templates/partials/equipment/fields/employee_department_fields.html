@@ -42,7 +42,7 @@
                 <option value="{{ employee.slug }}"
                         {% if equipment and equipment.employee_id == employee.slug %}selected{% endif %}
                 >
-                    {{ employee.name }}
+                    {{ employee.fullname }}
                 </option>
                 {% endfor %}
             </select>

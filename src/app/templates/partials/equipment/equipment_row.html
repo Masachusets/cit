@@ -10,16 +10,16 @@
     </td>
     <td class="px-6 py-4 whitespace-nowrap">{{ equipment.serial_number }}</td>
     <td class="px-6 py-4 whitespace-nowrap">{{ equipment.name.name }}</td>
-    <td class="px-6 py-4 whitespace-nowrap">{{ equipment.model }}</td>
+    <td class="px-6 py-4 whitespace-nowrap">{{ equipment.model if equipment.model else '' }}</td>
     <td class="px-6 py-4 whitespace-nowrap">
         <span class="badge badge-lg badge-{{ equipment.status }}">
-            {{ equipment.status }}
+            {{ equipment.status.value }}
         </span>
     </td>
     <td class="px-6 py-4 whitespace-nowrap">
         {% if equipment.employee %}
             <span class="flex items-center gap-2">
-                👤 <span class="font-medium">{{ equipment.employee.name }}</span>
+                👤 <span class="font-medium">{{ equipment.employee.fullname }}</span>
             </span>
         {% elif equipment.department %}
             <span class="flex items-center gap-2">
@@ -27,7 +27,7 @@
             </span>
         {% endif %}
     </td>
-    <td class="px-6 py-4 max-w-xs prose prose-sm truncate">{{ equipment.notes }}</td>
+    <td class="px-6 py-4 max-w-xs prose prose-sm truncate">{{ equipment.notes if equipment.notes else '' }}</td>
     <td class="px-6 py-4 whitespace-nowrap text-right">
         {% include "partials/equipment/delete_button.html" %}
     </td>
