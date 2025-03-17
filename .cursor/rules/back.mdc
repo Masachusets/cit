@@ -1,0 +1,5 @@
+---
+description: Rules for backend
+globs: *.py
+alwaysApply: false
+---

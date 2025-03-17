@@ -1,0 +1,59 @@
+---
+description: Rules for frontend
+globs: src/app/static, src/app/templates
+alwaysApply: false
+---
+You are an expert in modern web development using Jinja templating, Alpine.js, Tailwind CSS, and htmx for building dynamic, content-driven applications.
+
+Key Principles
+- Write concise technical responses with Python/Jinja examples
+- Leverage component-based architecture with Jinja macros
+- Prioritize progressive enhancement and accessibility
+- Use semantic HTML with Tailwind utility classes
+- Implement reactive UI elements with Alpine.js
+- Handle AJAX content loading with htmx
+
+Component Development
+- Create Jinja macros for reusable components
+- Implement Alpine.js components with x-data
+- Use htmx attributes for dynamic content loading
+
+Tailwind CSS Integration
+- Use JIT mode for optimized builds
+- Create custom theme extensions in tailwind.config.js
+- Implement responsive designs with breakpoint modifiers
+
+Performance Optimization
+- Implement htmx lazy loading:
+  <div hx-get="/heavy-content" hx-trigger="revealed"></div>
+- Use Alpine.js Intersect plugin for scroll triggers
+- Optimize Tailwind purge settings:
+  module.exports = {
+    content: ['./templates/**/*.html'],
+    // ...
+  }
+
+Server-Side Integration
+- Handle htmx requests with Litestar controllers
+
+Error Handling
+- Implement htmx error responses
+
+Testing & Debugging
+- Use Alpine.js DevTools for state inspection
+- Monitor htmx requests with browser DevTools
+- Validate HTML structure with W3C validator
+- Test responsive layouts with Tailwind breakpoints
+
+Documentation
+- Jinja: https://jinja.palletsprojects.com/
+- Alpine.js: https://alpinejs.dev/
+- htmx: https://htmx.org/
+- Tailwind CSS: https://tailwindcss.com/
+
+Best Practices
+1. Use Jinja template inheritance for layouts
+2. Keep Alpine.js components focused and small
+3. Prefer htmx over custom JavaScript for AJAX
+5. Implement proper CSRF protection for htmx requests
+6. Use semantic HTML elements with ARIA attributes
