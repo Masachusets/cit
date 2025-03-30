@@ -4,9 +4,7 @@ from typing import TYPE_CHECKING
 
 from advanced_alchemy.service import SQLAlchemyAsyncRepositoryService
 
-from src.app.database.models import Equipment
-
-from .repository import EquipmentRepository
+from .repository import EquipmentRepository, Equipment
 
 if TYPE_CHECKING:
     from litestar.contrib.sqlalchemy.repository import SQLAlchemyAsyncRepository
@@ -41,3 +39,34 @@ class EquipmentService(SQLAlchemyAsyncRepositoryService[Equipment]):
         del data["date_of_manufacture"]
 
         return await super().create(data=data)
+    
+    async def validate_it_number(self, it: str) -> tuple[bool, str | None]:
+        """
+        Проверяет валидность и уникальность IT номера
+        Returns:
+            tuple[valid: bool, error_message: str | None]
+        """
+        # Проверка формата
+        if not it.startswith('IT') or not it[2:].isdigit() or len(it) != 7:
+            return False, "Неверный формат. Используйте ITXXXXX"
+        
+        # Проверка уникальности
+        exists = await self.repository.exists(it=it)
+        if exists:
+            return False, "Этот IT номер уже используется"
+        
+        return True, None
+
+    async def generate_next_it(self) -> str:
+        """
+        Генерирует следующий доступный IT номер
+        """
+        result = await self.repository.max(Equipment.it)
+        max_it = result.scalar_one_or_none()
+        
+        if not max_it:
+            return "IT00000"
+        
+        # Извлекаем числовую часть и увеличиваем на 1
+        num = int(max_it[2:]) + 1
+        return f"IT{num:05d}"  # форматируем как 5 цифр с ведущими нулями
