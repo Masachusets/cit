@@ -7,15 +7,17 @@
 </head>
 
 <body class="bg-base-100">
+    
     {% include "partials/header.html" %}
 
-    <main id="main-content" class="max-w-7xl mx-auto px-4 py-8 bg-base-50 rounded-lg shadow-sm">
+    <main id="main-content" class="mx-auto px-4 py-8 bg-base-50 rounded-lg shadow-sm">
         {% block content %}{% endblock %}
     </main>
 
     {% include "partials/footer.html" %}
 
     {% block scripts %}{% endblock %}
+
 </body>
 
 </html>
