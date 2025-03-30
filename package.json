@@ -1,0 +1,24 @@
+{
+  "name": "cit-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for cit app",
+  "homepage": "https://github.com/Masachusets/cit#readme",
+  "bugs": {
+    "url": "https://github.com/Masachusets/cit/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Masachusets/cit.git"
+  },
+  "license": "ISC",
+  "author": "Pavlenko Dmitry",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "twcss": "tailwindcss -i ./src/app/static/css/app.css -o ./src/app/static/css/tailwind.css --minify --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.17",
+    "daisyui": "^5.0.9"
+  }
+}
