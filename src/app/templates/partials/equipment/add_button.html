@@ -1,7 +1,8 @@
 <button class="btn btn-primary"
-        hx-get="/equipments/new"
-        hx-target="#main-content"
-        hx-push-url="true"
->
-    Add New Unit
+        hx-get="{{ url_for('items:get_create_form_web') }}"
+        hx-target="#modal-content"
+        hx-trigger="click"
+        hx-indicator="#loading"
+        onclick="equipment_modal.showModal()">
+    Добавить
 </button>

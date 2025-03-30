@@ -1,0 +1,14 @@
+<!-- Модальное окно -->
+<dialog id="equipment_modal" class="modal">
+    <div class="modal-box">
+        <h3 class="font-bold text-lg mb-4">
+            {% if equipment %}Редактирование оборудования{% else %}Новое оборудование{% endif %}
+        </h3>
+        <div id="modal-content">
+            <!-- Здесь будет загружаться форма -->
+        </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+</dialog>
