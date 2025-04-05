@@ -1,45 +1,12 @@
 from litestar import Controller, Request, get, delete, post, put
+from litestar.datastructures.multi_dicts import FormMultiDict
 from litestar.di import Provide
 from litestar.response import Template
 
+from src.app.database import EquipmentStatus
+
 from ..dependencies import provide_equipment_service
 from ..service import EquipmentService, Equipment
-
-
-# test_results = [
-#     {
-#         "it": "IT00001",
-#         "serial_number": "б/н",
-#         "name": {"id": 1, "name": "Name 1"},
-#         "model": "Model 1",
-#         "manufacture_date": "2022-01",
-#         "arrival_date": "2022-01",
-#         "document_in_id": None,
-#         "document_out_id": None,
-#         "status": "exploited",
-#         "form_number": None,
-#         "department": None,
-#         "employee": {"slug": "slug", "name": "name"},
-#         "location": None,
-#         "notes": "",
-#     },
-#     {
-#         "it": "IT00002",
-#         "serial_number": "б/н",
-#         "name": {"id": 2, "name": "Printer"},
-#         "model": "Model 1",
-#         "manufacture_date": "2024-01",
-#         "arrival_date": "2024-02",
-#         "document_in_id": None,
-#         "document_out_id": None,
-#         "status": "exploited",
-#         "form_number": None,
-#         "department": None,
-#         "employee": {"slug": "slug1", "name": "Ivanov Ivan Ivanovich"},
-#         "location": None,
-#         "notes": "notes",
-#     },
-# ]
 
 
 class EquipmentWebController(Controller):
@@ -83,7 +50,7 @@ class EquipmentWebController(Controller):
         name="equipments:create_web",
     )
     async def create_item(self, service: EquipmentService, request: Request) -> Template:
-        data: dict = await request.form()
+        data: FormMultiDict = await request.form()
         print("-" * 30)
         print(dict(data))
         print("-" * 30)
@@ -91,8 +58,7 @@ class EquipmentWebController(Controller):
         # Валидация данных
         # item_data = EquipmentCreateSchema(**data)
     
-        # item: Equipment = await service.create(data=data)
-        service.create(**data)
+        # equipment: Equipment = await service.create(data=data)
         template_name = "partial/equipment/equipment_table.html"
         return Template(
             template_name=template_name,
@@ -103,12 +69,12 @@ class EquipmentWebController(Controller):
         operation_id="Web:UpdateEquipment",
         name="equipments:update_web",
     )
-    async def update_item(self, service: EquipmentService, equipment_it: str) -> Template:
-        item = await service.update(equipment_it)
+    async def update_equipment(self, service: EquipmentService, equipment_it: str) -> Template:
+        equipment = await service.update(equipment_it)
         template_name = "partial/equipment/equipment_table.html"  # TODO: update path
         return Template(
             template_name=template_name,
-            context={"item": item},
+            context={"equipment": equipment},
         )
 
     @delete(
@@ -167,7 +133,7 @@ class EquipmentWebController(Controller):
 
     @get(
         path="/validate-it",
-        name="items:validate_it",
+        name="equipments:validate_it",
     )
     async def validate_it(self, it: str, service: EquipmentService) -> Template:
         """Check IT number validity"""
@@ -185,12 +151,28 @@ class EquipmentWebController(Controller):
 
     @get(
         path="/next-it",
-        name="items:get_next_it",
+        name="equipments:get_next_it",
     )
     async def get_next_it(self, service: EquipmentService) -> Template:
         """Generate next IT number"""
         next_it = await service.generate_next_it()
         return Template(
-            template_name="items/components/form/fields/validation-message.html",
+            template_name="equipment/components/form/fields/validation-message.html",
             context={"message": next_it},
         )
+    
+    @get(
+        path="/statuses",
+        name="equipments:get_statuses",
+    )
+    async def get_all_statuses(self, request: Request) -> Template:
+        current_status = request.query_params.get("status")
+        print(current_status)
+        return Template(
+            template_name="partials/equipment/select_status.html",
+            context={
+                "statuses": list(EquipmentStatus),
+                "current_status": current_status,
+            }
+        )        
+   
