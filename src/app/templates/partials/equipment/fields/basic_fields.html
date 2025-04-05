@@ -2,7 +2,7 @@
 <div class="form-control" x-data="{ isValid: true, message: '' }">
     <label class="label">
         <span class="label-text">IT Number*</span>
-    </label>
+    </label> item
     <div class="relative">
         <input type="text"
                class="input input-bordered w-full"
@@ -11,12 +11,12 @@
                title="Format: ITXXXXX (where X is a digit)"
                value="{{ equipment.it if equipment }}"
                placeholder="IT00000"
-               hx-get="{{ url_for('items:validate_it') }}"
+               hx-get="{{ url_for('equipments:validate_it') }}"
                hx-trigger="change"
                hx-target="next .validation-message"
                hx-indicator=".it-loader"
                {% if not equipment %}
-               hx-get="{{ url_for('items:get_next_it') }}"
+               hx-get="{{ url_for('equipments:get_next_it') }}"
                hx-trigger="load"
                hx-swap="value"
                {% endif %}

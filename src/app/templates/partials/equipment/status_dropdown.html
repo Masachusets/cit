@@ -1,14 +1,27 @@
-<div class="form-control">
-    <label class="label">
-        <span class="label-text">Status*</span>
-    </label>
-    <select class="select select-bordered" name="status" required>
-        {% for status in equipment_statuses %}
-        <option value="{{ status.value }}"
-                {% if equipment and equipment.status == status %}selected{% endif %}
+<div 
+    class="form-control"
+    hx-get="{{ url_for('equipments:get_statuses') }}"
+    hx-target="#select_status"
+    hx-swap="outerHTML"
+    hx-include="#select_status"
+>
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">Статус*</legend>
+        <select 
+            id="select_status"
+            class="select" 
+            name="status"
+            required
         >
-            {{ status.value|title }}
-        </option>
-        {% endfor %}
-    </select>
+            {% if equipment %}
+                <option value={{ equipment.status.name }} selected>
+                    {{ equipment.status.value }}
+                </option>
+            {% else %}
+                <option value="EXPLOITED" selected>
+                    экспл.
+                </option>
+            {% endif %}
+        </select>
+    </fieldset>
 </div>

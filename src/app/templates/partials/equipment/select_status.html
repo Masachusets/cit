@@ -1,0 +1,14 @@
+<select 
+    class="select" 
+    name="status"
+    required
+>
+    {% for status in statuses %}
+        <option 
+            value="{{ status.name }}"
+            {% if status.name == current_status %}selected{% endif %}
+        >
+            {{ status.value }}
+        </option>
+    {% endfor %}
+</select>
