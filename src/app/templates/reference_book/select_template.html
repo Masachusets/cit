@@ -1,0 +1,13 @@
+<select 
+    class="select" 
+    {% if is_required | default(True) %}required{% endif %}
+>
+    {% for item in items %}
+        <option 
+            value="{{ item[value_key] }}"
+            {% if item[value_key]|string == current_id|string %}selected{% endif %}
+        >
+            {{ item[text_key] }}
+        </option>
+    {% endfor %}
+</select>

@@ -1,0 +1,24 @@
+<fieldset 
+        class="fieldset"
+        hx-get="{{ url_for('equipment_names:list_web') }}"
+        hx-push-url="false"
+        hx-target="#select_name"
+        hx-swap="outerHTML"
+        hx-include="#select_name"
+>
+    <legend class="fieldset-legend">Наименование*</legend>
+    <select 
+        id="select_name"
+        class="select" 
+        name="equipment_name" 
+        required
+    >
+        {% if equipment %}
+            <option value="{{ equipment.name.id }}" selected>
+                {{ equipment.name.name }}
+            </option>
+        {% else %}
+            <option>--Выберите наименование--</option>
+        {% endif %}
+    </select>
+</fieldset>

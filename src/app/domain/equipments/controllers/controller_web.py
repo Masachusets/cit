@@ -106,7 +106,6 @@ class EquipmentWebController(Controller):
     )
     async def get_update_form(self, service: EquipmentService, equipment_it: str) -> Template:
         equipment = await service.get(equipment_it)
-        print(equipment.serial_number)
         template_name = "equipment/form.html"
         return Template(
             template_name=template_name,
@@ -167,12 +166,10 @@ class EquipmentWebController(Controller):
     )
     async def get_all_statuses(self, request: Request) -> Template:
         current_status = request.query_params.get("status")
-        print(current_status)
         return Template(
             template_name="partials/equipment/select_status.html",
             context={
                 "statuses": list(EquipmentStatus),
                 "current_status": current_status,
             }
-        )        
-   
+        )

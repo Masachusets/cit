@@ -1,0 +1,24 @@
+<fieldset 
+    class="fieldset" 
+    x-show="assignmentType === 'department'"
+    hx-get="{{ url_for('departments:list_web') }}"
+    hx-push-url="false"
+    hx-target="#select_department"
+    hx-swap="outerHTML"
+    hx-include="#select_department"
+>
+    <select 
+        id="select_department"
+        name="department"
+        class="select"
+        x-bind:required="assignmentType === 'department'"
+>
+        {% if equipment and equipment.department %}
+            <option value="{{ equipment.department.slug }}" selected>
+                {{ equipment.department.name }}
+            </option>
+        {% else %}
+            <option value="">Выберите подразделение...</option>
+        {% endif %}
+    </select>
+</fieldset>

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Annotated, TYPE_CHECKING
 
-from litestar import Controller, get, post, delete, patch
+from litestar import Controller, Request, get, post, delete, patch
 from litestar.di import Provide
 from litestar.response import Template
 
@@ -142,24 +142,25 @@ class EquipmentNameController(Controller):
 
     @get(
         path=urls.ITEM_NAME_LIST_WEB,
-        operation_id="Web:ListEquipmentNames",
         name="equipment_names:list_web",
-        summary="Get list of equipment_names",
-        description="Get list of equipment_names for template",
         include_in_schema=False,
     )
     async def get_list_web(
         self,
+        request: Request,
         service: EquipmentNameService,
-        # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
     ) -> Template:
         """Get list of departments for template"""
-        results, total = await service.list_and_count()  # (*filters)
-        template_name = "reference_book/equipment_names.html"
+        results, total = await service.list_and_count()
+        current_name_id = request.query_params.get("equipment_name")
+        
         return Template(
-            template_name=template_name,
+            template_name="reference_book/select_template.html",
             context={
-                "equipment_names": results,
+                "items": results,
                 "total": total,
+                "value_key": "id",
+                "text_key": "name",
+                "current_id": current_name_id,
             },
         )

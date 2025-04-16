@@ -1,0 +1,24 @@
+<fieldset 
+    class="fieldset" 
+    x-show="assignmentType === 'employee'"
+    hx-get="{{ url_for('employees:list_web') }}"
+    hx-push-url="false"
+    hx-target="#select_employee"
+    hx-swap="outerHTML"
+    hx-include="#select_employee"
+>
+    <select 
+        id="select_employee"
+        name="employee"
+        class="select"
+        x-bind:required="assignmentType === 'employee'"
+>
+        {% if equipment and equipment.employee %}
+            <option value="{{ equipment.employee.slug }}" selected>
+                {{ equipment.employee.fullname }}
+            </option>
+        {% else %}
+            <option value="">Выберите сотрудника...</option>
+        {% endif %}
+    </select>
+</fieldset>
