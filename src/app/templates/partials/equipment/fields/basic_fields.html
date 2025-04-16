@@ -1,28 +1,30 @@
 <!-- IT Number -->
-<div class="form-control" x-data="{ isValid: true, message: '' }">
-    <label class="label">
-        <span class="label-text">IT Number*</span>
-    </label> item
+<fieldset class="fieldset" x-data="{ isValid: true, message: '' }">
+    <legend class="fieldset-legend">Инвентарный номер*</legend>
     <div class="relative">
-        <input type="text"
-               class="input input-bordered w-full"
-               name="it"
-               pattern="IT\d{5}"
-               title="Format: ITXXXXX (where X is a digit)"
-               value="{{ equipment.it if equipment }}"
-               placeholder="IT00000"
-               hx-get="{{ url_for('equipments:validate_it') }}"
-               hx-trigger="change"
-               hx-target="next .validation-message"
-               hx-indicator=".it-loader"
-               {% if not equipment %}
-               hx-get="{{ url_for('equipments:get_next_it') }}"
-               hx-trigger="load"
-               hx-swap="value"
-               {% endif %}
-               @input="isValid = $el.checkValidity()"
-               :class="{ 'input-error': !isValid }"
-               required>
+        <input 
+            type="text"
+            class="input input-bordered w-full"
+            name="it"
+            pattern="IT\d{5}"
+            title="Format: ITXXXXX (where X is a digit)"
+            value="{{ equipment.it if equipment }}"
+            placeholder="IT00000"
+            hx-get="{{ url_for('equipments:validate_it') }}"
+            hx-trigger="change"
+            hx-target="next .validation-message"
+            hx-indicator=".it-loader"
+            
+            {% if not equipment %}
+                hx-get="{{ url_for('equipments:get_next_it') }}"
+                hx-trigger="load"
+                hx-swap="value"
+            {% endif %}
+            
+            @input="isValid = $el.checkValidity()"
+            :class="{ 'input-error': !isValid }"
+            required
+        >
         <div class="it-loader htmx-indicator absolute right-3 top-3">
             <svg class="animate-spin h-5 w-5 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -31,16 +33,12 @@
         </div>
     </div>
     <div class="validation-message text-sm mt-1"></div>
-    <div class="text-xs text-gray-500 mt-1">
-        Формат: ITXXXXX (где X - цифра)
-    </div>
-</div>
+    <div class="fieldset-label">Формат: ITXXXXX (где X - цифра)</div>
+</fieldset>
 
 <!-- Serial Number -->
-<div class="form-control">
-    <label class="label">
-        <span class="label-text">Serial Number*</span>
-    </label>
+<fieldset class="fieldset">
+    <legend class="fieldset-legend">Серийный номер*</legend>
     <input type="text"
            class="input input-bordered"
            name="serial_number"
@@ -48,34 +46,21 @@
            title="Only letters, numbers and hyphens allowed"
            value="{{ equipment.serial_number if equipment }}"
            required>
-    <div class="text-xs text-gray-500 mt-1">
-        Только буквы, цифры и дефисы
-    </div>
-</div>
+    <div class="fieldset-label">Только буквы, цифры и дефисы</div>
+</fieldset>
 
 <!-- Name and Model -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="form-control">
-        <label class="label">
-            <span class="label-text">Equipment Name*</span>
-        </label>
-        <select class="select select-bordered" name="name_id" required>
-            {% for name in equipment_names %}
-            <option value="{{ name.id }}"
-                    {% if equipment and equipment.name_id == name.id %}selected{% endif %}>
-                {{ name.name }}
-            </option>
-            {% endfor %}
-        </select>
-    </div>
+    
+    {% include "reference_book/equipment_names/name_dropdown.html" %}
 
-    <div class="form-control">
-        <label class="label">
-            <span class="label-text">Model</span>
-        </label>
-        <input type="text"
-               class="input input-bordered"
-               name="model"
-               value="{{ equipment.model if equipment }}">
-    </div>
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">Модель</legend>
+        <input 
+            type="text"
+            class="input input-bordered"
+            name="model"
+            value="{{ equipment.model if equipment }}"
+        >
+    </fieldset>
 </div>

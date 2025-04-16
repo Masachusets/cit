@@ -1,9 +1,7 @@
 <div x-data="{ assignmentType: '{{ 'employee' if equipment and equipment.employee else 'department' if equipment and equipment.department else '' }}' }"
      class="space-y-4">
-    <div class="form-control">
-        <label class="label">
-            <span class="label-text">Assignment Type*</span>
-        </label>
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">Закрепление*</legend>
         <div class="flex gap-4">
             <label class="cursor-pointer label">
                 <input type="radio"
@@ -13,7 +11,7 @@
                        x-model="assignmentType"
                        required
                 >
-                <span class="label-text ml-2">Employee</span>
+                <span class="label-text ml-2">Сотрудник</span>
             </label>
             <label class="cursor-pointer label">
                 <input type="radio"
@@ -23,50 +21,43 @@
                        x-model="assignmentType"
                        required
                 >
-                <span class="label-text ml-2">Department</span>
+                <span class="label-text ml-2">Подразделение</span>
             </label>
         </div>
+    </fieldset>
+
+    <div class="relative">
+        
+        {% include "reference_book/employees/employee_dropdown.html" %}
+
+        {% include "reference_book/departments/department_dropdown.html" %}
+
     </div>
 
-    <div x-show="assignmentType === 'employee'">
-        <div class="form-control">
-            <label class="label">
-                <span class="label-text">Employee*</span>
-            </label>
-            <select class="select select-bordered"
-                    name="employee_id"
-                    x-bind:required="assignmentType === 'employee'"
+    <!-- Form Number and Consignment Number -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Номер формуляра</legend>
+            <input 
+                type="text"
+                class="input input-bordered"
+                name="form_number"
+                value="{{ equipment.form_number if equipment }}"
+                maxlength="5"
             >
-                <option value="">Select Employee</option>
-                {% for employee in employees %}
-                <option value="{{ employee.slug }}"
-                        {% if equipment and equipment.employee_id == employee.slug %}selected{% endif %}
-                >
-                    {{ employee.fullname }}
-                </option>
-                {% endfor %}
-            </select>
-        </div>
-    </div>
+        </fieldset>
 
-    <div x-show="assignmentType === 'department'">
-        <div class="form-control">
-            <label class="label">
-                <span class="label-text">Department*</span>
-            </label>
-            <select class="select select-bordered"
-                    name="department_id"
-                    x-bind:required="assignmentType === 'department'"
+        <fieldset class="fieldset" x-show="assignmentType === 'department'">
+            <legend class="fieldset-legend">Номер накладной</legend>
+            <input 
+                type="text"
+                class="input input-bordered"
+                name="consignment_number"
+                value="{{ equipment.consignment_number if equipment }}"
+                maxlength="5"
+                x-bind:disabled="assignmentType !== 'department'"
             >
-                <option value="">Select Department</option>
-                {% for department in departments %}
-                <option value="{{ department.slug }}"
-                        {% if equipment and equipment.department_id == department.slug %}selected{% endif %}
-                >
-                    {{ department.name }}
-                </option>
-                {% endfor %}
-            </select>
-        </div>
+            <div class="fieldset-label">Заполняется только если выбрано подразделение</div>
+        </fieldset>
     </div>
 </div>

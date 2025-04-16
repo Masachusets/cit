@@ -1,14 +1,60 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     {% include "partials/equipment/status_dropdown.html" %}
 
-    <div class="form-control">
-        <fieldset class="fieldset">
-            <legend class="fieldset-legend">Местоположение</legend>
-            <input type="text"
-                class="input input-bordered"
-                name="location"
-                value="{{ equipment.location if equipment }}"
-            >
-        </fieldset>
-    </div>
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">Местоположение</legend>
+        <input type="text"
+            class="input input-bordered"
+            name="location"
+            value="{{ equipment.location if equipment }}"
+        >
+    </fieldset>
+</div>
+
+<!-- Document Fields -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">Входящий документ</legend>
+        <select 
+            class="select select-bordered"
+            name="document_in_id"
+            {# hx-get="{{ url_for('documents:list_web') }}" #} {# TODO: Implement endpoint #}
+            {# hx-trigger="load" #}
+            {# hx-target="this" #}
+            {# hx-swap="innerHTML" #}
+        >
+            {% if equipment and equipment.document_in %}
+                <option value="{{ equipment.document_in.id }}" selected>{{ equipment.document_in.number }} ({{ equipment.document_in.date }})</option>
+            {% else %}
+                <option value="">Выберите документ...</option>
+            {% endif %}
+        </select>
+    </fieldset>
+</div>
+
+<!-- Manufacture Date and Arrival Date -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">Дата производства</legend>
+        <input 
+            type="month"
+            class="input input-bordered"
+            name="manufacture_date"
+            value="{{ equipment.manufacture_date if equipment }}"
+            placeholder="YYYY-MM"
+        >
+        <div class="fieldset-label">Формат: ГГГГ-ММ</div>
+    </fieldset>
+
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">Дата поступления</legend>
+        <input 
+            type="month"
+            class="input input-bordered"
+            name="arrival_date"
+            value="{{ equipment.arrival_date if equipment }}"
+            placeholder="YYYY-MM"
+        >
+        <div class="fieldset-label">Формат: ГГГГ-ММ</div>
+    </fieldset>
 </div>
