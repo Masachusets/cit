@@ -6,6 +6,7 @@ from litestar.response import Template
 from src.app.database import EquipmentStatus
 
 from ..dependencies import provide_equipment_service
+from ..dto import EquipmentCreateDTO
 from ..service import EquipmentService, Equipment
 
 
@@ -49,19 +50,23 @@ class EquipmentWebController(Controller):
         operation_id="Web:CreateEquipment",
         name="equipments:create_web",
     )
-    async def create_item(self, service: EquipmentService, request: Request) -> Template:
+    async def create_equipment(
+        self, 
+        service: EquipmentService, 
+        request: Request,
+    ) -> Template:
         data: FormMultiDict = await request.form()
-        print("-" * 30)
-        print(dict(data))
-        print("-" * 30)
     
         # Валидация данных
-        # item_data = EquipmentCreateSchema(**data)
+        # equipment_data: EquipmentCreateDTO = EquipmentCreateDTO(data)
     
-        # equipment: Equipment = await service.create(data=data)
-        template_name = "partial/equipment/equipment_table.html"
+        new_equipment: Equipment = await service.create_web(data=dict(data))
+        template_name = "partials/equipment/equipment_row.html"
         return Template(
             template_name=template_name,
+            context={
+                "equipment": new_equipment,
+            }
         )
     
     @put(
@@ -69,12 +74,23 @@ class EquipmentWebController(Controller):
         operation_id="Web:UpdateEquipment",
         name="equipments:update_web",
     )
-    async def update_equipment(self, service: EquipmentService, equipment_it: str) -> Template:
-        equipment = await service.update(equipment_it)
-        template_name = "partial/equipment/equipment_table.html"  # TODO: update path
+    async def update_equipment(
+        self, 
+        service: EquipmentService, 
+        request: Request,
+        equipment_it: str,
+    ) -> Template:
+        data: dict = await request.form()
+        print("-" * 30)
+        print(dict(data))
+        print("-" * 30)
+        update_equipment = await service.update(data=data, item_id=equipment_it)
+        template_name = "partial/equipment/equipment_row.html"  # TODO: update path
         return Template(
             template_name=template_name,
-            context={"equipment": equipment},
+            context={
+                "equipment": update_equipment,
+            },
         )
 
     @delete(
@@ -94,10 +110,14 @@ class EquipmentWebController(Controller):
         path="/create",
         name="items:get_create_form_web",
     )
-    async def get_create_form(self) -> Template:
+    async def get_create_form(self, service: EquipmentService) -> Template:
+        next_it = await service.generate_next_it()
         template_name = "equipment/form.html"
         return Template(
             template_name=template_name,
+            context={
+                "next_it": next_it,
+            }
         )
     
     @get(
@@ -111,24 +131,6 @@ class EquipmentWebController(Controller):
             template_name=template_name,
             context={"equipment": equipment},
         )
-    
-    # @get(
-    #     path="/toogle-binding",
-    #     name="items:toggle_binding",
-    # )
-    # async def edit_item(self, binding_type: str) -> Template:
-    #     """
-    #
-    #     :param binding_type: str - type of binding
-    #     :return: Template - employee or department
-    #     """
-    #     if binding_type == "employee":
-    #         template_name = "items/components/form/fields/employee.html"
-    #     else:
-    #         template_name = "items/components/form/fields/department.html"
-    #     return Template(
-    #         template_name=template_name,
-    #     )
 
     @get(
         path="/validate-it",
@@ -140,25 +142,13 @@ class EquipmentWebController(Controller):
         
         if not is_valid:
             return Template(
-                template_name="items/components/form/fields/validation-message.html",
+                template_name="equipment/components/form/fields/validation-message.html",
                 context={"message": error_message},
             )
         else:
             return Template(
-                template_str="",
+                template_str=" ",
             )
-
-    @get(
-        path="/next-it",
-        name="equipments:get_next_it",
-    )
-    async def get_next_it(self, service: EquipmentService) -> Template:
-        """Generate next IT number"""
-        next_it = await service.generate_next_it()
-        return Template(
-            template_name="equipment/components/form/fields/validation-message.html",
-            context={"message": next_it},
-        )
     
     @get(
         path="/statuses",

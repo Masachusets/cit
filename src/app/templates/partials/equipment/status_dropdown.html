@@ -1,6 +1,7 @@
 <fieldset 
     class="fieldset"
     hx-get="{{ url_for('equipments:get_statuses') }}"
+    hx-push-url="false"
     hx-target="#select_status"
     hx-swap="outerHTML"
     hx-include="#select_status"

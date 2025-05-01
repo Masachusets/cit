@@ -1,5 +1,5 @@
 <!-- partials/equipment/equipment_row.html -->
-<tr class="hover:bg-base-100">
+<tr class="hover:bg-base-100" id="equipment-row-{{ equipment.it }}">
     <td class="px-6 whitespace-nowrap">
         <a class="link link-primary font-medium hover:text-primary-focus"
            hx-get={{ url_for('items:get_update_form_web', equipment_it=equipment.it) }}
