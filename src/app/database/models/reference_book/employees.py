@@ -17,7 +17,7 @@ class Employee(BaseStockModel, SlugKey):
 
     slug: Mapped[str] = mapped_column(primary_key=True)
     fullname: Mapped[str] = mapped_column(String(100), unique=True)
-    card_number: Mapped[int] = mapped_column(Integer, nullable=True, default=None)
+    card_number: Mapped[int | None] = mapped_column(Integer, nullable=True, default=None)
 
     # relationships
 

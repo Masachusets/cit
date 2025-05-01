@@ -43,45 +43,45 @@ class Equipment(BaseStockModel):
         primary_key=True,
     )
     name_id: Mapped[int] = mapped_column(ForeignKey("equipment_names.id"))
-    model: Mapped[str] = mapped_column(String, nullable=True)
+    model: Mapped[str | None] = mapped_column(String, nullable=True)
     serial_number: Mapped[str] = mapped_column(String(50))
-    manufacture_date: Mapped[str] = mapped_column(
+    manufacture_date: Mapped[str | None] = mapped_column(
         # YearMonthType,
         String(7),
         nullable=True,
     )
-    arrival_date: Mapped[str] = mapped_column(
+    arrival_date: Mapped[str | None] = mapped_column(
         # YearMonthType,
         String(7),
         nullable=True,
     )
-    document_in_id: Mapped[int] = mapped_column(
+    document_in_id: Mapped[int | None] = mapped_column(
         ForeignKey("documents.id"), nullable=True
     )
-    document_out_id: Mapped[int] = mapped_column(
+    document_out_id: Mapped[int | None] = mapped_column(
         ForeignKey("documents.id"), nullable=True
     )
     status: Mapped[EquipmentStatus] = mapped_column(default=EquipmentStatus.EXPLOITED)
-    employee_id: Mapped[str] = mapped_column(
+    employee_id: Mapped[str | None] = mapped_column(
         ForeignKey("employees.slug"), nullable=True
     )
-    department_id: Mapped[str] = mapped_column(
+    department_id: Mapped[str | None] = mapped_column(
         ForeignKey("departments.slug"), nullable=True
     )
-    form_number: Mapped[str] = mapped_column(String(5), nullable=True)
-    consignment_number: Mapped[str] = mapped_column(String(5), nullable=True)
-    location: Mapped[str] = mapped_column(String(50), nullable=True)
-    notes: Mapped[str] = mapped_column(String, nullable=True)
+    form_number: Mapped[str | None] = mapped_column(String(5), nullable=True)
+    consignment_number: Mapped[str | None] = mapped_column(String(5), nullable=True)
+    location: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    notes: Mapped[str | None] = mapped_column(String, nullable=True)
 
     # relationships
     name: Mapped[EquipmentName] = create_relationship()
-    employee: Mapped[Employee] = create_relationship()
-    department: Mapped[Department] = create_relationship()
-    document_in: Mapped[Document] = create_relationship(
+    employee: Mapped[Employee | None] = create_relationship()
+    department: Mapped[Department | None] = create_relationship()
+    document_in: Mapped[Document | None] = create_relationship(
         back_populates="equipments_in",
         foreign_keys=[document_in_id],
     )
-    document_out: Mapped[Document] = create_relationship(
+    document_out: Mapped[Document | None] = create_relationship(
         back_populates="equipments_out",
         foreign_keys=[document_out_id],
     )

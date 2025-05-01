@@ -159,6 +159,7 @@ class EquipmentNameController(Controller):
             context={
                 "items": results,
                 "total": total,
+                "item_name_id": "name_id",
                 "value_key": "id",
                 "text_key": "name",
                 "current_id": current_name_id,

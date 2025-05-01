@@ -5,16 +5,20 @@ from src.app.database.models import Equipment
 
 class EquipmentCreateDTO(SQLAlchemyDTO[Equipment]):
     config = SQLAlchemyDTOConfig(
-        exclude={"name", "employee", "department", "document_in", "document_out"},
+        exclude={
+            "document_out_id",
+        },
     )
 
 
 class EquipmentUpdateDTO(SQLAlchemyDTO[Equipment]):
     config = SQLAlchemyDTOConfig(
-        exclude={"it", "name", "employee", "department", "document_in", "document_out"},
+        exclude={"it"},
         partial=True,
     )
 
 
 class EquipmentReadDTO(SQLAlchemyDTO[Equipment]):
-    config = SQLAlchemyDTOConfig()
+    config = SQLAlchemyDTOConfig(
+        rename_fields={"model": "equipment_model"},
+    )

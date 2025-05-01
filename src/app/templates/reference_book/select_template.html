@@ -1,5 +1,6 @@
 <select 
-    class="select" 
+    class="select"
+    name="{{ item_name_id }}"
     {% if is_required | default(True) %}required{% endif %}
 >
     {% for item in items %}

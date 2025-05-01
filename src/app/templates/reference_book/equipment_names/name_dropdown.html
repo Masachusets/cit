@@ -10,7 +10,7 @@
     <select 
         id="select_name"
         class="select" 
-        name="equipment_name" 
+        name="name_id" 
         required
     >
         {% if equipment %}
@@ -18,7 +18,7 @@
                 {{ equipment.name.name }}
             </option>
         {% else %}
-            <option>--Выберите наименование--</option>
+            <option selected disabled>--Выберите наименование--</option>
         {% endif %}
     </select>
 </fieldset>

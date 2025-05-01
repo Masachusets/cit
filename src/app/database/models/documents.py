@@ -17,7 +17,7 @@ class Document(BaseStockModel, BigIntPrimaryKey):
 
     type: Mapped[str] = mapped_column(String(50), nullable=False)
     doc_number: Mapped[str] = mapped_column(String(10), nullable=False)
-    doc_date: Mapped[date] = mapped_column(Date, nullable=True, default=date.today)
+    doc_date: Mapped[date | None] = mapped_column(Date, nullable=True, default=date.today)
     comment: Mapped[str] = mapped_column(Text, nullable=False, default="")
 
     # relationships

@@ -9,7 +9,7 @@
 >
     <select 
         id="select_department"
-        name="department"
+        name="department_id"
         class="select"
         x-bind:required="assignmentType === 'department'"
 >
@@ -18,7 +18,7 @@
                 {{ equipment.department.name }}
             </option>
         {% else %}
-            <option value="">Выберите подразделение...</option>
+            <option value="storage">СКЛАД</option>
         {% endif %}
     </select>
 </fieldset>

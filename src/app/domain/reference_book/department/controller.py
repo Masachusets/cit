@@ -160,6 +160,7 @@ class DepartmentController(Controller):
             context={
                 "items": results, 
                 "total": total,
+                "item_name_id": "department_id",
                 "value_key": "slug",
                 "text_key": "name",
                 "current_id": current_department_id,

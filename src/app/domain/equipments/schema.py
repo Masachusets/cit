@@ -18,19 +18,19 @@ class BaseStruct(msgspec.Struct):
 class EquipmentCreateSchema(BaseStruct, kw_only=True):
     it: str
     serial_number: str = "б/н"
-    item_name_id: int | None
-    item_model: str | None
-    date_of_manufacture: str
-    date_of_arrival: datetime.date = datetime.today()
+    name_id: int | None
+    model: str | None
+    manufacture_date: str
+    arrival_date: datetime.date = datetime.today()
     document_in_id: int | None
     document_out_id: int | None
     status: EquipmentStatus = EquipmentStatus.EXPLOITED
-    number_of_form: str | None
-    employee_slug: str | None
-    department_slug: str | None
-    number_of_consignment: str | None
+    form_number: str | None
+    employee_id: str | None
+    department_id: str | None
+    consignment_number: str | None
     location: str | None
-    comment: str
+    notes: str
 
     def __post_init__(self, **kwargs):
         super().__init__(**kwargs)

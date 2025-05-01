@@ -156,6 +156,7 @@ class EmployeeController(Controller):
             context={
                 "items": results, 
                 "total": total,
+                "item_name_id": "employee_id",
                 "value_key": "slug",
                 "text_key": "fullname",
                 "current_id": current_employee_id,
