@@ -15,23 +15,6 @@ if TYPE_CHECKING:
 
 class EquipmentService(SQLAlchemyAsyncRepositoryService[Equipment]):
     repository_type: SQLAlchemyAsyncRepository = EquipmentRepository  # type: ignore
-    # match_fields = [
-    #     "it",
-    #     "serial_number",
-    #     "name_id",
-    #     "model",
-    #     "manufacture_date",
-    #     "arrival_date",
-    #     "document_in_id",
-    #     "document_out_id",
-    #     "status",
-    #     "form_number",
-    #     "department_id",
-    #     "consignment_number",
-    #     "employee_id",
-    #     "location",
-    #     "notes",
-    # ]
 
     @staticmethod
     def clean_assignment_fields(data: dict) -> dict:
@@ -39,11 +22,11 @@ class EquipmentService(SQLAlchemyAsyncRepositoryService[Equipment]):
         Оставляет только employee_id или только department_id.
         """
         if data.pop("assignment_type", None) == "department":
-            data.pop("employee_id", None)
+            data["employee_id"] = None
         else:
-            data.pop("department_id", None)
-            data.pop("consignment_number", None)
-        return data 
+            data["department_id"] = None
+            data["consignment_number"] = None
+        return data
 
     async def create_web(self, data: dict, **kwargs) -> Equipment:
         data: dict = self.clean_assignment_fields(data)

@@ -80,12 +80,9 @@ class EquipmentWebController(Controller):
         request: Request,
         equipment_it: str,
     ) -> Template:
-        data: dict = await request.form()
-        print("-" * 30)
-        print(dict(data))
-        print("-" * 30)
-        update_equipment = await service.update(data=data, item_id=equipment_it)
-        template_name = "partial/equipment/equipment_row.html"  # TODO: update path
+        data: FormMultiDict = await request.form()
+        update_equipment = await service.update_web(data=dict(data), equipment_id=equipment_it)
+        template_name = "partials/equipment/equipment_row.html"
         return Template(
             template_name=template_name,
             context={
