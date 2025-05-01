@@ -2,12 +2,16 @@
     <div class="max-w-4xl mx-auto bg-base-100 p-6 rounded-lg shadow">
         <form method="post"
               {% if equipment %}
-                hx-put={{ url_for('equipments:update_web', equipment_it=equipment.it) }}
+                hx-put="{{ url_for('equipments:update_web', equipment_it=equipment.it) }}"
+                hx-target="#equipment-row-{{ equipment.it }}"
+                hx-swap="outerHTML"
               {% else %}
-                hx-post={{ url_for('equipments:create_web') }}
-              {% endif %}
-              hx-target="equipment-table"
-              hx-push-url="true"
+                hx-post="{{ url_for('equipments:create_web') }}"
+                hx-target="#equipment-tbody"
+                hx-swap="beforeend"
+              {% endif %}              
+              hx-push-url="false"
+              hx-on:after-request="if(event.detail.successful) document.getElementById('equipment_modal').close()"
         >
 
             <div class="grid grid-cols-1 gap-6">

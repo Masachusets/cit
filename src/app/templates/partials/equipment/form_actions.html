@@ -1,8 +1,11 @@
 <div class="flex justify-end gap-4 mt-6">
     <form method="dialog">
-        <button class="btn btn-primary focus:bg-accent">Отмена</button>
+        <button class="btn btn-info">Отмена</button>
     </form>
-    <button type="submit" class="btn btn-primary focus:bg-accent">
+    <button 
+        type="submit" 
+        class="btn btn-success focus:bg-accent"
+    >
         {% if equipment %}Сохранить{% else %}Добавить{% endif %}
     </button>
 </div>
