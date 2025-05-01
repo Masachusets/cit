@@ -12,9 +12,10 @@ from ..service import EquipmentService
 from src.app.database.models import Equipment
 
 if TYPE_CHECKING:
+    from advanced_alchemy.filters import FilterTypes
     from advanced_alchemy.service import OffsetPagination
     from litestar.dto import DTOData
-    from litestar.params import Parameter
+    from litestar.params import Dependency, Parameter
 
 
 class EquipmentController(Controller):
@@ -34,7 +35,7 @@ class EquipmentController(Controller):
         service: EquipmentService,
         # filters: Annotated[list[FilterTypes], Dependency(skip_validation=True)],
     ) -> OffsetPagination[Equipment]:
-        results, total = await service.list_and_count()  # (*filters)
+        results, total = await service.list_and_count() # (*filters)
         return service.to_schema(
             data=results,
             total=total,
@@ -55,13 +56,15 @@ class EquipmentController(Controller):
             str,
             Parameter(
                 title="Equipment ID",
-                description="The ID of the item to retrieve",
+                description="The equipment to retrieve",
             ),
         ],
     ) -> Equipment:
         """Retrieve the details of an equipment"""
         db_obj = await service.get(equipment_it)
-        return service.to_schema(db_obj)
+        return service.to_schema(
+            data=db_obj, 
+        )
 
     @post(
         path=urls.EQUIPMENT_CREATE,
