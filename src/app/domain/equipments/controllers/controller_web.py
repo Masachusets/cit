@@ -2,11 +2,12 @@ from litestar import Controller, Request, get, delete, post, put
 from litestar.datastructures.multi_dicts import FormMultiDict
 from litestar.di import Provide
 from litestar.response import Template
+from litestar.status_codes import HTTP_200_OK, HTTP_204_NO_CONTENT
 
 from src.app.database import EquipmentStatus
 
 from ..dependencies import provide_equipment_service
-from ..dto import EquipmentCreateDTO
+# from ..dto import EquipmentCreateDTO
 from ..service import EquipmentService, Equipment
 
 
@@ -94,13 +95,13 @@ class EquipmentWebController(Controller):
         path="/{equipment_it:str}",
         operation_id="Web:DeleteEquipment",
         name="equipments:delete_web",
-        status_code=200,  # TODO: remove
+        status_code=HTTP_200_OK,  # TODO: remove
     )
     async def delete_equipment(self, service: EquipmentService, equipment_it: str) -> Template:
         await service.delete(equipment_it)
-        template_name = "partial/equipment/equipment_table.html"  # TODO: update path
         return Template(
-            template_name=template_name,
+            template_str=" ",
+            status_code=HTTP_200_OK,
         )
 
     @get(
