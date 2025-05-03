@@ -7,16 +7,19 @@
         name="it"
         pattern="it\d{5}"
         title="Format: itXXXXX (where X is a digit)"
-        value="{{ equipment.it if equipment else next_it }}"
-
-        hx-get="{{ url_for('equipments:validate_it') }}"
-        hx-push-url="false"
-        hx-trigger="change"
-        hx-target="next .validation-message"
-        hx-indicator=".it-loader"
-        
-        @input="isValid = $el.checkValidity()"
-        :class="{ 'input-error': !isValid }"
+        {% if equipment %}
+            value="{{ equipment.it }}"
+            readonly
+        {% else %}
+            value= "{{ next_it }}"
+            hx-get="{{ url_for('equipments:validate_it') }}"
+            hx-push-url="false"
+            hx-trigger="change"
+            hx-target="next .validation-message"
+            hx-indicator=".it-loader"
+            @input="isValid = $el.checkValidity()"
+            :class="{ 'input-error': !isValid }"
+        {% endif %}
         required
     >
     <div class="it-loader htmx-indicator absolute right-3 top-3">
