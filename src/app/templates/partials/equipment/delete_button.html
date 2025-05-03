@@ -1,6 +1,7 @@
 <button class="btn btn-ghost btn-xs text-error"
         hx-delete="{{ url_for('equipments:delete_web', equipment_it=equipment.it) }}"
         hx-confirm="Вы уверены, что хотите удалить это оборудование?"
+        hx-push-url="false"
         hx-target="closest tr"
 >
     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
